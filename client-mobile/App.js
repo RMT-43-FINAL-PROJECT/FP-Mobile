@@ -1,9 +1,9 @@
+import MainNavigation from "./navigation/mainNavigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Login from "./screens/login";
 import OrderList from "./screens/orderList";
 import * as Font from 'expo-font';
 import { useEffect, useState } from "react";
-
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -23,17 +23,14 @@ export default function App() {
 
   if (!fontLoaded) {
     return (
-      // You might want to show a loading screen or component here
       <SafeAreaProvider>
-        {/* <Login /> */}
+        <MainNavigation />
       </SafeAreaProvider>
     );
   }
   return (
     <SafeAreaProvider>
-      <Login />
-      {/* <OrderList /> */}
+      <MainNavigation />
     </SafeAreaProvider>
   );
 }
-

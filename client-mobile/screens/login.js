@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Login() {
+export default function Login({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <Image style={styles.logoImage} source={require('../assets/logosapa.png')} />
@@ -27,7 +27,7 @@ export default function Login() {
                 </View>
             </View>
             <Text style={styles.forgotPassword}>forgot password?</Text>
-            <TouchableOpacity style={styles.proceedButton}>
+            <TouchableOpacity onPress={() => navigation.navigate('ProductList')} style={styles.proceedButton}>
                 <Text style={styles.proceedText}>Login</Text>
             </TouchableOpacity>
         </SafeAreaView>
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     },
     logo: {
         fontSize: 24,
-        fontFamily: 'Mulish-Bold',
         fontWeight: '700',
         color: '#000',
         marginBottom: 20,
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
     proceedText: {
         fontSize: 14,
         color: '#fff',
-        fontFamily: 'Mulish-Bold',
         fontWeight: '700',
         lineHeight: 22
     },
