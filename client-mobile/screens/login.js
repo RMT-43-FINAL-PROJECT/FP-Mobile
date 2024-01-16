@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         fontSize: 24,
-        fontFamily: 'Roboto-Bold',
+        fontFamily: 'Mulish-Bold',
         fontWeight: '700',
         color: '#000',
         marginBottom: 20,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     proceedText: {
         fontSize: 14,
         color: '#fff',
-        fontFamily: 'Roboto-Bold',
+        fontFamily: 'Mulish-Bold',
         fontWeight: '700',
         lineHeight: 22
     },
