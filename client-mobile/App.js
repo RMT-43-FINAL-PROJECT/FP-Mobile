@@ -1,11 +1,10 @@
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import Login from "./screens/login";
+import MainNavigation from "./navigation/mainNavigation";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <Login />
+      <MainNavigation />
     </SafeAreaProvider>
   );
 }
-
