@@ -5,7 +5,7 @@ import CardProductList from "../components/CardProductList";
 
 const ProductList = () => {
     return (
-        <View>
+        <View style={styles.outerContainer}>
             <View style={styles.componentParent}>
                 <CardProductList />
             </View>
@@ -17,8 +17,14 @@ export default ProductList
 
 const styles = StyleSheet.create({
     componentParent: {
-        top: 10,
+        paddingTop: 15,
         backgroundColor: "#f6f9ff",
-        paddingHorizontal: 26,
+        paddingHorizontal: 20,
+    },
+    outerContainer: {
+        overflow: "hidden",
+        flex: 1,
+        backgroundColor: "#f6f9ff",
+        width: "100%"
     },
 });
