@@ -4,143 +4,223 @@ import { Color, FontFamily, FontSize, Border, Padding } from "../style/GlobalSty
 
 const CardProductList = () => {
   return (
-    <View>
-      <View style={[styles.frameView, styles.frameViewBg]}>
+    <>
+      <View style={styles.rectangleShadowBox}>
         <View style={styles.frameParent}>
           <View style={styles.rectangleParent}>
-            <View style={styles.frameChild} />
+            <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
             <View style={styles.discountQuantityParent}>
+              <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/discount.png')} />
+
               <Text
-                style={[styles.discountQuantity, styles.quantityTypo]}
+                style={styles.discountQuantity}
               >
-                Discount Quantity
+                Discount
               </Text>
-              <View style={[styles.phoneParent, styles.parentFlexBox]}>
-                
-                <Text style={[styles.karton, styles.kartonTypo]}>
-                  1000 Karton
-                </Text>
-              </View>
+            </View>
+            <View style={styles.phoneParent}>
+
+              <Text style={styles.karton}>
+                1000 Karton
+              </Text>
             </View>
           </View>
           <View style={styles.frameGroup}>
-            <View style={styles.frameParent1}>
-              <View style={styles.frameWrapper1}>
-                <View style={styles.packageParent}>
-                  <Text style={styles.textTitle}>
-                    Indomie Goreng
-                  </Text>
-                </View>
-              </View>
-              <Text style={[styles.available, styles.availableTypo]}>
+            <View style={styles.headerTitleContainer}>
+              <Image style={styles.iconLayout} source={require('../assets/icons/product.png')} />
+
+              <Text style={styles.textTitle}>
+                Indomie Goreng
+              </Text>
+              <Text style={styles.availableText}>
                 available
               </Text>
             </View>
-            <Image
-              style={styles.separatorsIcon}
-              contentFit="cover"
-            />
-            <Text style={[styles.quantity, styles.quantityTypo]}>
+            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
+
+            <Text style={styles.subContentTitle}>
               Quantity
             </Text>
             <View
-              style={[styles.bookOpen02Parent, styles.parentFlexBox]}
+              style={styles.parentSubContent}
             >
-              <Image
-                style={styles.phoneIcon}
-                contentFit="cover"
-              />
-              <Text style={[styles.karton1, styles.kartonTypo]}>
+              <Image style={styles.iconLayout} source={require('../assets/icons/quantity.png')} />
+              <Text style={styles.subContentText}>
                 10.000.000 Karton
               </Text>
             </View>
-            <Image
-              style={styles.separatorsIcon}
-              contentFit="cover"
-            />
-            <Text style={[styles.quantity, styles.quantityTypo]}>
+            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
+
+            <Text style={styles.subContentTitle}>
               Price
             </Text>
             <View
-              style={[styles.bookOpen02Parent, styles.parentFlexBox]}
+              style={styles.parentSubContent}
             >
-              <Image
-                style={styles.phoneIcon}
-                contentFit="cover"
-              />
-              <Text style={[styles.karton1, styles.kartonTypo]}>
-                +621898372783
+              <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
+              <Text style={styles.subContentText}>
+                Rp 100.000
               </Text>
             </View>
-            <Image
-              style={styles.separatorsIcon}
-              contentFit="cover"
-            />
-            <Text style={[styles.quantity, styles.quantityTypo]}>
+            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
+            <Text style={styles.subContentTitle}>
               Category
             </Text>
-            <View style={styles.frameItem} />
+            <View
+              style={styles.parentSubContent}
+            >
+              <Image style={styles.iconLayout} source={require('../assets/icons/category.png')} />
+              <Text style={styles.subContentText}>
+                Makanan Instant
+              </Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+
+      <View style={styles.rectangleShadowBox}>
+        <View style={styles.frameParent}>
+          <View style={styles.rectangleParent}>
+            <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
+            <View style={styles.discountQuantityParent}>
+              <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/discount.png')} />
+
+              <Text
+                style={styles.discountQuantity}
+              >
+                Discount
+              </Text>
+            </View>
+            <View style={styles.phoneParent}>
+
+              <Text style={styles.karton}>
+                1000 Karton
+              </Text>
+            </View>
+          </View>
+          <View style={styles.frameGroup}>
+            <View style={styles.headerTitleContainer}>
+              <Image style={styles.iconLayout} source={require('../assets/icons/product.png')} />
+
+              <Text style={styles.textTitle}>
+                Indomie Goreng
+              </Text>
+              <Text style={styles.notAvailableText}>
+                not available
+              </Text>
+            </View>
+            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
+
+            <Text style={styles.subContentTitle}>
+              Quantity
+            </Text>
+            <View
+              style={styles.parentSubContent}
+            >
+              <Image style={styles.iconLayout} source={require('../assets/icons/quantity.png')} />
+              <Text style={styles.subContentText}>
+                10.000.000 Karton
+              </Text>
+            </View>
+            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
+
+            <Text style={styles.subContentTitle}>
+              Price
+            </Text>
+            <View
+              style={styles.parentSubContent}
+            >
+              <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
+              <Text style={styles.subContentText}>
+                Rp 100.000
+              </Text>
+            </View>
+            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
+            <Text style={styles.subContentTitle}>
+              Category
+            </Text>
+            <View
+              style={styles.parentSubContent}
+            >
+              <Image style={styles.iconLayout} source={require('../assets/icons/category.png')} />
+              <Text style={styles.subContentText}>
+                Makanan Instant
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </>
   )
 }
 
 export default CardProductList
 
 const styles = StyleSheet.create({
-  frameView: {
-    width: '101%',
-    padding: 10,
+  rectangleShadowBox: {
+    height: 170,
+    width: 355,
+    shadowOpacity: 1,
+    elevation: 2,
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowColor: "rgba(0, 0, 0, 0.4)",
     borderRadius: 8,
-    height: 172,
-    position: "absolute",
-    overflow: "hidden",
-  },
-  frameViewBg: {
-    backgroundColor: 'white',
-    overflow: "hidden",
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    marginBottom: 15
   },
   frameParent: {
     flexDirection: "row",
     alignSelf: "stretch",
     flex: 1,
   },
-  frameParent1: {
+  headerTitleContainer: {
     flexDirection: "row",
-    alignSelf: "stretch",
+    marginTop: 5,
+    alignItems: "center",
   },
   rectangleParent: {
-    alignSelf: "stretch",
+    alignItems: "center",
     flex: 1,
+    alignItems: "center",
+    paddingTop: 10,
+    flexDirection: "column",
   },
-  frameChild: {
-    backgroundColor: 'dark',
+  imageCard: {
     width: 110,
     height: 110,
     borderRadius: 8,
   },
+  iconLayout: {
+    height: 16,
+    width: 16,
+    overflow: "hidden",
+  },
   discountQuantityParent: {
-    marginTop: 10,
-    alignSelf: "stretch",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5,
   },
   discountQuantity: {
-    textAlign: "center",
-  },
-  quantityTypo: {
-    color: 'gray',
+    color: 'black',
     lineHeight: 10,
     fontSize: 10,
-    alignSelf: "stretch",
+    paddingLeft: 2,
+    marginTop: 3,
   },
   phoneParent: {
     justifyContent: "center",
     marginTop: 2,
+    alignItems: "center",
   },
-  parentFlexBox: {
+  parentSubContent: {
     alignItems: "center",
     flexDirection: "row",
+    marginTop: 3,
   },
   phoneIcon: {
     width: 16,
@@ -150,49 +230,49 @@ const styles = StyleSheet.create({
   karton: {
     width: 66,
     textAlign: "center",
-  },
-  karton1: {
-    textAlign: "left",
-    flex: 1,
-  },
-  kartonTypo: {
     marginLeft: 5,
-    color: Color.colorDimgray,
-    fontFamily: FontFamily.mulishRegular,
+    color: "red",
+    fontFamily: 'Mulish-Regular',
     lineHeight: 10,
     fontSize: FontSize.size_3xs,
   },
+  subContentText: {
+    textAlign: "left",
+    flex: 1,
+    marginLeft: 5,
+    color: Color.colorDimgray,
+    fontFamily: 'Mulish-Regular',
+    lineHeight: 10,
+    fontSize: 10,
+  },
   frameGroup: {
-    width: 198,
-    marginLeft: 12,
+    width: 240,
+    paddingLeft: 8,
     alignSelf: "stretch",
   },
-  frameWrapper1: {
-    flex: 1,
-  },
-  packageParent: {
-    flexDirection: "row",
-  },
-  packageIcon: {
-    width: 20,
-    height: 20,
-    overflow: "hidden",
-  },
   textTitle: {
-    fontSize: 15,
-    color: 'black',
+    fontSize: 14,
+    marginLeft: 4,
     textAlign: "left",
-    fontWeight: 'bold'
+    fontFamily: 'Mulish-Bold',
+    lineHeight: 20,
+    color: "#2c2c2c"
   },
-  available: {
+  availableText: {
     color: Color.colorMediumaquamarine,
-  },
-  availableTypo: {
-    marginLeft: 3,
     textAlign: "left",
     lineHeight: 20,
-    fontFamily: FontFamily.mulishRegular,
-    fontSize: FontSize.size_3xs,
+    fontFamily: "Mulish-Regular",
+    fontSize: 12,
+    marginLeft: 50
+  },
+  notAvailableText: {
+    color: "red",
+    textAlign: "left",
+    lineHeight: 20,
+    fontFamily: "Mulish-Regular",
+    fontSize: 12,
+    marginLeft: 28
   },
   separatorsIcon: {
     maxWidth: "100%",
@@ -202,12 +282,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: "100%",
   },
-  quantity: {
+  subContentTitle: {
     marginTop: 3,
     textAlign: "left",
-  },
-  bookOpen02Parent: {
-    marginTop: 3,
-    alignSelf: "stretch",
+    fontFamily: "Mulish-Regular",
+    fontSize: 10,
   },
 })

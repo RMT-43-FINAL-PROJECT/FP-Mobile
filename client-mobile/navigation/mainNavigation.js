@@ -4,7 +4,7 @@ import Login from '../screens/login'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import ProductList from '../screens/productList';
-import OrderList from '../screens/orderList';
+import StoreList from '../screens/storeList';
 
 const Stack = createNativeStackNavigator()
 
@@ -22,10 +22,10 @@ const mainNavigation = () => {
           }}
         />
         <Stack.Screen
-          name="OrderList"
-          component={OrderList}
+          name="StoreList"
+          component={StoreList}
           options={{
-            headerTitle: 'Order List'
+            headerTitle: 'Store List'
           }}
         />
       </Stack.Navigator>

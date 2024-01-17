@@ -1,7 +1,7 @@
 import MainNavigation from "./navigation/mainNavigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Login from "./screens/login";
-import OrderList from "./screens/orderList";
+import OrderList from "./screens/storeList";
 import * as Font from 'expo-font';
 import { useEffect, useState } from "react";
 
