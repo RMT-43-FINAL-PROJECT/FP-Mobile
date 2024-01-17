@@ -1,13 +1,16 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { Color, FontFamily, FontSize, Border, Padding } from "../style/GlobalStyles";
 import CardProductList from "../components/CardProductList";
 
-const ProductList = () => {
+const ProductList = ({ navigation }) => {
     return (
         <View style={styles.outerContainer}>
             <View style={styles.componentParent}>
                 <CardProductList />
+                <TouchableOpacity onPress={() => navigation.navigate('OrderList')}>
+                    <Text>orderList</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
