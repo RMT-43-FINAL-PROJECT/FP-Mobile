@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import ProductList from '../screens/productList';
 import StoreList from '../screens/storeList';
 import OrderList from '../screens/orderList';
+import Home from '../screens/home';
 
 const Stack = createNativeStackNavigator()
 
@@ -15,6 +16,13 @@ const mainNavigation = () => {
       <StatusBar style='auto' />
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerTitle: 'Home'
+          }}
+        />
         <Stack.Screen
           name="ProductList"
           component={ProductList}

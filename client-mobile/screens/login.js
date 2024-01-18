@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
                 </View>
             </View>
             <Text style={styles.forgotPassword}>forgot password?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('StoreList')} style={styles.proceedButton}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.proceedButton}>
                 <Text style={styles.proceedText}>Login</Text>
             </TouchableOpacity>
         </SafeAreaView>

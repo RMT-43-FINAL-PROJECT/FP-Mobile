@@ -192,6 +192,6 @@ const styles = StyleSheet.create({
     unverified: {
         color: "#ffbd1a",
         fontFamily: "Mulish-Regular",
-        fontSize: "10"
+        fontSize: 10
     },
 });
