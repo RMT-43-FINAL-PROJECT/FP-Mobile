@@ -8,12 +8,12 @@ export default function CardHomeOverview() {
         <View style={styles.frameWrapper}>
             <View style={styles.groupParent}>
                 <View style={styles.rectangleLayout}>
-                    {/* <TouchableOpacity onPress={() => navigation.navigate('')}> */}
-                    <View style={[styles.groupBlue, styles.groupLayout]} />
-                    <Text style={[styles.contentTextTitle, styles.contentText]}>Monthly sales</Text>
-                    <Text style={[styles.mainContent, styles.contentText]}>Rp 100.000.000</Text>
-                    <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
-                    {/* </TouchableOpacity> */}
+                    <TouchableOpacity onPress={() => navigation.navigate('MonthlySales')}>
+                        <View style={[styles.groupBlue, styles.groupLayout]} />
+                        <Text style={[styles.contentTextTitle, styles.contentText]}>Monthly sales</Text>
+                        <Text style={[styles.mainContent, styles.contentText]}>Rp 100.000.000</Text>
+                        <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
+                    </TouchableOpacity>
                 </View>
                 <View style={[styles.rectangleGroup, styles.rectangleLayout]}>
                     <TouchableOpacity onPress={() => navigation.navigate('StoreList')}>

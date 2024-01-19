@@ -4,12 +4,12 @@ export default function CardStoreList() {
     return (
         <>
             <View style={styles.rectangleShadowBox}>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.imageCard} source={{
-                        uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
-                    }} />
-                </View>
                 <View style={styles.frameParent}>
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.imageCard} source={{
+                            uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
+                        }} />
+                    </View>
                     <View style={styles.headerContainer}>
                         <View style={styles.frameGroup}>
                             <View style={styles.cardTitle}>
@@ -29,7 +29,13 @@ export default function CardStoreList() {
                     <Text style={styles.address} >Address</Text>
                     <View style={styles.parentContentContainer}>
                         <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/address.png')} />
-                        <Text style={styles.addressContent} numberOfLines={2}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                        <Text style={styles.addressContent} numberOfLines={3}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                    </View>
+                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
+                    <Text style={styles.address}>Owner's Name</Text>
+                    <View style={styles.parentContentContainer}>
+                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/user.png')} />
+                        <Text style={styles.addressContent} numberOfLines={2}>Anies Beston</Text>
                     </View>
                     <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address}>Phone number</Text>
@@ -40,14 +46,13 @@ export default function CardStoreList() {
                 </View>
             </View>
 
-
             <View style={styles.rectangleShadowBox}>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.imageCard} source={{
-                        uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
-                    }} />
-                </View>
                 <View style={styles.frameParent}>
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.imageCard} source={{
+                            uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
+                        }} />
+                    </View>
                     <View style={styles.headerContainer}>
                         <View style={styles.frameGroup}>
                             <View style={styles.cardTitle}>
@@ -67,7 +72,13 @@ export default function CardStoreList() {
                     <Text style={styles.address} >Address</Text>
                     <View style={styles.parentContentContainer}>
                         <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/address.png')} />
-                        <Text style={styles.addressContent} numberOfLines={2}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                        <Text style={styles.addressContent} numberOfLines={3}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Text>
+                    </View>
+                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
+                    <Text style={styles.address}>Owner's Name</Text>
+                    <View style={styles.parentContentContainer}>
+                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/user.png')} />
+                        <Text style={styles.addressContent} numberOfLines={2}>Anies Beston</Text>
                     </View>
                     <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address}>Phone number</Text>
@@ -82,8 +93,8 @@ export default function CardStoreList() {
 }
 const styles = StyleSheet.create({
     rectangleShadowBox: {
-        marginTop: 40,
-        height: 160,
+        marginTop: 10,
+        height: 320,
         width: 355,
         shadowOpacity: 1,
         elevation: 2,
@@ -96,21 +107,20 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: "#fff",
         flexDirection: "row",
-        marginBottom: -25
+        marginBottom: 5
     },
     imageContainer: {
-        marginHorizontal: 7,
-        marginVertical: 7
+        marginTop: 10,
     },
     imageCard: {
-        height: 145,
-        width: 100,
+        height: 120,
+        width: 335,
         overflow: "hidden",
         borderRadius: 4
     },
     frameParent: {
         flex: 1,
-        marginLeft: 3
+        marginLeft: 10
     },
     frameGroup: {
         width: "100%",
@@ -119,7 +129,7 @@ const styles = StyleSheet.create({
     cardTitle: {
         alignItems: "center",
         flexDirection: "row",
-        paddingTop: 12
+        paddingTop: 8
     },
     iconLayout: {
         height: 16,
@@ -127,7 +137,7 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     verifiedParent: {
-        width: 110,
+        width: 210,
         justifyContent: "flex-end",
         flexDirection: "row",
         alignItems: "center"
@@ -162,10 +172,10 @@ const styles = StyleSheet.create({
     },
     separatorsIcon: {
         height: 1,
-        marginVertical: 8,
+        marginVertical: 5,
         maxWidth: "100%",
         overflow: "hidden",
-        width: "100%"
+        width: "100%",
     },
     address: {
         marginTop: 5,

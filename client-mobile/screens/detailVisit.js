@@ -9,7 +9,12 @@ export default function DetailVisit() {
             <View style={styles.rectangleOuterContainer} />
             <View style={styles.contentParent}>
                 <View style={styles.contentFrame}>
-                    <Text style={styles.contentHeaderTitle}>Toko Budi</Text>
+                    <View style={styles.contentTitleParent}>
+                        <Text style={styles.contentHeaderTitle}>Toko Budi</Text>
+                        <View style={styles.statusParent}>
+                            <Text style={styles.status}>Completed</Text>
+                        </View>
+                    </View>
                     <Image style={styles.separatorsIcon} resizeMode="cover" source={require('../assets/icons/separators.png')} />
                     <View style={[styles.subContentFrame, styles.ParentFlexBox]}>
                         <Text style={styles.contentLeft}>Date</Text>
@@ -88,6 +93,9 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 1,
     },
+    contentTitleParent: {
+        flexDirection: "row"
+    },
     ParentFlexBox: {
         flexDirection: "row",
         marginTop: 8
@@ -131,11 +139,21 @@ const styles = StyleSheet.create({
     },
     contentHeaderTitle: {
         fontSize: 18,
-        lineHeight: 28,
         textAlign: "left",
         fontFamily: "Mulish-Bold",
         color: "black",
-        alignSelf: "stretch"
+        marginBottom: 6
+    },
+    statusParent: {
+        width: 210,
+        justifyContent: "flex-end",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    status: {
+        color: "#1dcd9f",
+        fontFamily: "Mulish-Bold",
+        fontSize: 14
     },
     separatorsIcon: {
         height: 1,

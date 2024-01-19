@@ -19,23 +19,7 @@ export default function CardOrderList() {
                 </View>
                 <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
                 <View style={styles.storeNameParent}>
-                    <Text style={styles.contentTitle}>Products</Text>
-                    <View style={styles.parentMainContent}>
-                        <Image style={styles.iconLayout} source={require('../assets/icons/product.png')} />
-                        <Text style={styles.mainContent}>Indomie Goreng</Text>
-                    </View>
-                </View>
-                <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-                <View style={styles.storeNameParent}>
-                    <Text style={styles.contentTitle}>Quantity</Text>
-                    <View style={styles.parentMainContent}>
-                        <Image style={styles.iconLayout} source={require('../assets/icons/quantity.png')} />
-                        <Text style={styles.mainContent}>200 Karton</Text>
-                    </View>
-                    <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-                </View>
-                <View style={styles.storeNameParent}>
-                    <Text style={styles.contentTitle}>Price</Text>
+                    <Text style={styles.contentTitle}>Total Billed</Text>
                     <View style={styles.parentMainContent}>
                         <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
                         <Text style={styles.mainContent}>Rp 2.000.000</Text>
@@ -43,17 +27,9 @@ export default function CardOrderList() {
                     <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
                 </View>
                 <View style={styles.storeNameParent}>
-                    <Text style={styles.contentTitle}>Salesperson</Text>
-                    <View style={styles.parentMainContent}>
-                        <Image style={styles.iconLayout} source={require('../assets/icons/user.png')} />
-                        <Text style={styles.mainContent}>Prabowo Gibran</Text>
-                    </View>
-                    <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-                </View>
-                <View style={styles.storeNameParent}>
                     <Text style={styles.contentTitle}>Status</Text>
                     <View style={styles.parentMainContent}>
-                        <Text style={styles.confirmStatus}>Confirm</Text>
+                        <Text style={styles.confirmStatus}>Confirmed</Text>
                     </View>
                 </View>
             </View>
@@ -72,6 +48,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         width: "100%",
         flex: 1,
+        marginBottom: 15,
     },
     instanceWrapper: {
         borderTopLeftRadius: 12,
