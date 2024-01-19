@@ -1,10 +1,12 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function CardHomeScheduleVisit() {
+    const navigation = useNavigation()
     return (
         <>
             <View style={styles.contentContainer}>
-                <View style={styles.rectangleParent}>
+                <TouchableOpacity style={styles.rectangleParent} onPress={() => navigation.navigate('DetailVisit')}>
                     <Image style={styles.imageStore} source={{
                         uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
                     }} />
@@ -23,7 +25,7 @@ export default function CardHomeScheduleVisit() {
                             <Text style={[styles.completedColor, styles.contentRight]}>Completed</Text>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.contentContainer}>
@@ -55,7 +57,6 @@ const styles = StyleSheet.create({
 
     contentContainer: {
         marginTop: 11,
-        backgroundColor: "red"
     },
     rectangleParent: {
         marginTop: 12,
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: "row",
         position: "absolute",
-        alignItems: "center"
+        alignItems: "center",
     },
     contentRight: {
         marginLeft: 6,

@@ -10,7 +10,7 @@ const CardProductList = () => {
           <View style={styles.rectangleParent}>
             <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
             <View style={styles.discountQuantityParent}>
-              <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/discount.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/discount.png')} />
 
               <Text
                 style={styles.discountQuantity}
@@ -27,7 +27,7 @@ const CardProductList = () => {
           </View>
           <View style={styles.frameGroup}>
             <View style={styles.headerTitleContainer}>
-              <Image style={styles.iconLayout} source={require('../assets/icons/product.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/product.png')} />
 
               <Text style={styles.textTitle}>
                 Indomie Goreng
@@ -44,7 +44,7 @@ const CardProductList = () => {
             <View
               style={styles.parentSubContent}
             >
-              <Image style={styles.iconLayout} source={require('../assets/icons/quantity.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/quantity.png')} />
               <Text style={styles.subContentText}>
                 10.000.000 Karton
               </Text>
@@ -57,7 +57,7 @@ const CardProductList = () => {
             <View
               style={styles.parentSubContent}
             >
-              <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/price.png')} />
               <Text style={styles.subContentText}>
                 Rp 100.000
               </Text>
@@ -69,7 +69,7 @@ const CardProductList = () => {
             <View
               style={styles.parentSubContent}
             >
-              <Image style={styles.iconLayout} source={require('../assets/icons/category.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/category.png')} />
               <Text style={styles.subContentText}>
                 Makanan Instant
               </Text>
@@ -83,7 +83,7 @@ const CardProductList = () => {
           <View style={styles.rectangleParent}>
             <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
             <View style={styles.discountQuantityParent}>
-              <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/discount.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/discount.png')} />
 
               <Text
                 style={styles.discountQuantity}
@@ -100,7 +100,7 @@ const CardProductList = () => {
           </View>
           <View style={styles.frameGroup}>
             <View style={styles.headerTitleContainer}>
-              <Image style={styles.iconLayout} source={require('../assets/icons/product.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/product.png')} />
 
               <Text style={styles.textTitle}>
                 Indomie Goreng
@@ -117,7 +117,7 @@ const CardProductList = () => {
             <View
               style={styles.parentSubContent}
             >
-              <Image style={styles.iconLayout} source={require('../assets/icons/quantity.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/quantity.png')} />
               <Text style={styles.subContentText}>
                 10.000.000 Karton
               </Text>
@@ -130,7 +130,7 @@ const CardProductList = () => {
             <View
               style={styles.parentSubContent}
             >
-              <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/price.png')} />
               <Text style={styles.subContentText}>
                 Rp 100.000
               </Text>
@@ -142,7 +142,7 @@ const CardProductList = () => {
             <View
               style={styles.parentSubContent}
             >
-              <Image style={styles.iconLayout} source={require('../assets/icons/category.png')} />
+              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/category.png')} />
               <Text style={styles.subContentText}>
                 Makanan Instant
               </Text>
@@ -158,7 +158,7 @@ export default CardProductList
 
 const styles = StyleSheet.create({
   rectangleShadowBox: {
-    height: 170,
+    height: 185,
     width: 355,
     shadowOpacity: 1,
     elevation: 2,
@@ -275,12 +275,11 @@ const styles = StyleSheet.create({
     marginLeft: 28
   },
   separatorsIcon: {
+    height: 1,
+    marginVertical: 7,
     maxWidth: "100%",
-    height: 8,
-    marginTop: 3,
-    alignSelf: "stretch",
     overflow: "hidden",
-    width: "100%",
+    width: "100%"
   },
   subContentTitle: {
     marginTop: 3,

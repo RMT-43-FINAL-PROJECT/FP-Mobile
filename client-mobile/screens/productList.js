@@ -8,9 +8,6 @@ const ProductList = ({ navigation }) => {
         <View style={styles.outerContainer}>
             <View style={styles.componentParent}>
                 <CardProductList />
-                <TouchableOpacity onPress={() => navigation.navigate('OrderList')}>
-                    <Text>orderList</Text>
-                </TouchableOpacity>
             </View>
         </View>
     )

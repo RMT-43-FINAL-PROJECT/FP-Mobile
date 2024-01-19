@@ -12,13 +12,13 @@ export default function CardHomeOverview() {
                     <View style={[styles.groupBlue, styles.groupLayout]} />
                     <Text style={[styles.contentTextTitle, styles.contentText]}>Monthly sales</Text>
                     <Text style={[styles.mainContent, styles.contentText]}>Rp 100.000.000</Text>
-                    <Image style={styles.iconArrow} resizeMode="cover" source={require('../assets/icons/toprightarrow.png')} />
+                    <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
                     {/* </TouchableOpacity> */}
                 </View>
                 <View style={[styles.rectangleGroup, styles.rectangleLayout]}>
                     <TouchableOpacity onPress={() => navigation.navigate('StoreList')}>
                         <View style={[styles.groupGreen, styles.groupLayout]} />
-                        <Image style={styles.iconArrow} resizeMode="cover" source={require('../assets/icons/toprightarrow.png')} />
+                        <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
                         <Text style={[styles.contentTextTitle, styles.contentText]}>Store List</Text>
                         <Text style={[styles.mainContent, styles.contentText]}>100 Stores</Text>
                     </TouchableOpacity>
@@ -28,7 +28,7 @@ export default function CardHomeOverview() {
                 <View style={styles.rectangleLayout}>
                     <TouchableOpacity onPress={() => navigation.navigate('ProductList')}>
                         <View style={[styles.groupYellow, styles.groupLayout]} />
-                        <Image style={styles.iconArrow} resizeMode="cover" source={require('../assets/icons/toprightarrow.png')} />
+                        <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
                         <Text style={[styles.contentTextTitle, styles.contentText]}>Product List</Text>
                         <Text style={[styles.mainContent, styles.contentText]}>1000 Products</Text>
                     </TouchableOpacity>
@@ -37,7 +37,7 @@ export default function CardHomeOverview() {
                     <TouchableOpacity onPress={() => navigation.navigate('OrderList')}>
                         <View style={[styles.groupGray, styles.groupLayout]} />
                         <Text style={[styles.contentTextTitle, styles.contentText]}>Order List</Text>
-                        <Image style={styles.iconArrow} resizeMode="cover" source={require('../assets/icons/toprightarrow.png')} />
+                        <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
                         <Text style={[styles.mainContent, styles.contentText]}>30 Orders</Text>
                     </TouchableOpacity>
                 </View>
