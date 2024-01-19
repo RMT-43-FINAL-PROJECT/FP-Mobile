@@ -144,9 +144,10 @@ const styles = StyleSheet.create({
         alignSelf: "stretch"
     },
     separatorsIcon: {
+        height: 1,
+        marginVertical: 7,
         maxWidth: "100%",
         overflow: "hidden",
-        marginVertical: 4,
         width: "100%"
     },
 });

@@ -7,6 +7,7 @@ import ProductList from '../screens/productList';
 import StoreList from '../screens/storeList';
 import OrderList from '../screens/orderList';
 import Home from '../screens/home';
+import DetailVisit from '../screens/detailVisit';
 
 const Stack = createNativeStackNavigator()
 
@@ -28,6 +29,13 @@ const mainNavigation = () => {
           component={ProductList}
           options={{
             headerTitle: 'Product List'
+          }}
+        />
+        <Stack.Screen
+          name="DetailVisit"
+          component={DetailVisit}
+          options={{
+            headerTitle: 'Detail Visit'
           }}
         />
         <Stack.Screen

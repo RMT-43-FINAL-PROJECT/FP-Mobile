@@ -13,28 +13,28 @@ export default function CardStoreList() {
                     <View style={styles.headerContainer}>
                         <View style={styles.frameGroup}>
                             <View style={styles.cardTitle}>
-                                <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/location.png')} />
+                                <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/location.png')} />
                                 <Text style={styles.headerCardText}>Toko Pak Anies</Text>
 
                                 {/* <Text style={[status === 'verified' ? styles.verified : styles.unverified, styles.verifiedText]}>verified</Text>
-                            {status === 'verified' && <Image style={styles.image1Icon} resizeMode="cover" source="image 1.png" />} */}
+                            {status === 'verified' && <Image style={styles.image1Icon} contentMode="cover" source="image 1.png" />} */}
                                 <View style={styles.verifiedParent}>
                                     <Text style={styles.verifiedText}>verified</Text>
-                                    <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/verified.png')} />
+                                    <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/verified.png')} />
                                 </View>
                             </View>
                         </View>
                     </View>
-                    <Image style={styles.separatorsIcon} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address} >Address</Text>
                     <View style={styles.parentContentContainer}>
-                        <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/address.png')} />
+                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/address.png')} />
                         <Text style={styles.addressContent} numberOfLines={2}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
                     </View>
-                    <Image style={styles.separatorsIcon} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address}>Phone number</Text>
                     <View style={styles.parentContentContainer}>
-                        <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/phone.png')} />
+                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/phonegray.png')} />
                         <Text style={styles.addressContent} numberOfLines={2}>+621-67894892</Text>
                     </View>
                 </View>
@@ -51,28 +51,28 @@ export default function CardStoreList() {
                     <View style={styles.headerContainer}>
                         <View style={styles.frameGroup}>
                             <View style={styles.cardTitle}>
-                                <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/location.png')} />
+                                <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/location.png')} />
                                 <Text style={styles.headerCardText}>Toko Pak Anies</Text>
 
                                 {/* <Text style={[status === 'verified' ? styles.verified : styles.unverified, styles.verifiedText]}>verified</Text>
-                            {status === 'verified' && <Image style={styles.image1Icon} resizeMode="cover" source="image 1.png" />} */}
+                            {status === 'verified' && <Image style={styles.image1Icon} contentMode="cover" source="image 1.png" />} */}
                                 <View style={styles.verifiedParent}>
                                     <Text style={styles.unverified}>unverified</Text>
-                                    <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/warning.png')} />
+                                    <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/warning.png')} />
                                 </View>
                             </View>
                         </View>
                     </View>
-                    <Image style={styles.separatorsIcon} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address} >Address</Text>
                     <View style={styles.parentContentContainer}>
-                        <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/address.png')} />
+                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/address.png')} />
                         <Text style={styles.addressContent} numberOfLines={2}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
                     </View>
-                    <Image style={styles.separatorsIcon} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address}>Phone number</Text>
                     <View style={styles.parentContentContainer}>
-                        <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/phone.png')} />
+                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/phonegray.png')} />
                         <Text style={styles.addressContent} numberOfLines={2}>+621-67894892</Text>
                     </View>
                 </View>
@@ -161,12 +161,11 @@ const styles = StyleSheet.create({
         alignSelf: "stretch",
     },
     separatorsIcon: {
+        height: 1,
+        marginVertical: 8,
         maxWidth: "100%",
-        height: 8,
         overflow: "hidden",
-        width: "100%",
-        marginTop: 10,
-        alignSelf: "stretch"
+        width: "100%"
     },
     address: {
         marginTop: 5,

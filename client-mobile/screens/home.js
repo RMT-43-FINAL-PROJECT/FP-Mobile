@@ -1,22 +1,22 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import CardHomeOverview from "../components/CardHomeOverview";
 import CardHomeScheduleVisit from "../components/CardHomeScheduleVisit";
 
 export default function Home() {
     return (
-        <View style={styles.outerContainer}>
+        <ScrollView style={styles.outerContainer}>
             <View style={styles.containerSalesName}>
-                <Image style={styles.notifIconPosition} resizeMode="cover" source={{ uri: "https://m.media-amazon.com/images/M/MV5BMmY2OGM1NjEtNGRiZi00NGY5LThjMzMtOTViYTMwOGM2YmE0XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_FMjpg_UX1000_.jpg" }} />
+                <Image style={styles.notifIconPosition} contentMode="cover" source={{ uri: "https://m.media-amazon.com/images/M/MV5BMmY2OGM1NjEtNGRiZi00NGY5LThjMzMtOTViYTMwOGM2YmE0XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_FMjpg_UX1000_.jpg" }} />
                 <Text style={styles.salesNameText}>Budi Budiman</Text>
                 <View style={styles.headerIconContainer}>
                     <View style={styles.iconsParent}>
-                        <Image style={styles.notifIconLayout} resizeMode="cover" source={require('../assets/icons/notif.png')} />
+                        <Image style={styles.notifIconLayout} contentMode="cover" source={require('../assets/icons/notif.png')} />
                         <View style={styles.counterLayout}>
-                            <Image style={styles.circleCounter} resizeMode="cover" source={require('../assets/icons/counter.png')} />
+                            <Image style={styles.circleCounter} contentMode="cover" source={require('../assets/icons/counter.png')} />
                             <Text style={styles.counterText}>1</Text>
                         </View>
                     </View>
-                    <Image style={styles.settingsLineIcon} resizeMode="cover" source={require('../assets/icons/settings.png')} />
+                    <Image style={styles.settingsLineIcon} contentMode="cover" source={require('../assets/icons/settings.png')} />
                 </View>
             </View>
             <View style={styles.componentParent}>
@@ -28,9 +28,13 @@ export default function Home() {
                 <View style={styles.scheduleParent}>
                     <CardHomeScheduleVisit />
                     <CardHomeScheduleVisit />
+                    <CardHomeScheduleVisit />
+                    <CardHomeScheduleVisit />
+                    <CardHomeScheduleVisit />
+                    <CardHomeScheduleVisit />
                 </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
