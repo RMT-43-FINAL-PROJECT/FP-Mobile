@@ -10,18 +10,14 @@ const CardProductList = () => {
           <View style={styles.rectangleParent}>
             <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
             <View style={styles.discountQuantityParent}>
-              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/discount.png')} />
-
               <Text
                 style={styles.discountQuantity}
               >
                 Discount
               </Text>
-            </View>
-            <View style={styles.phoneParent}>
 
               <Text style={styles.karton}>
-                1000 Karton
+                5 % @ 1000 Karton
               </Text>
             </View>
           </View>
@@ -83,18 +79,14 @@ const CardProductList = () => {
           <View style={styles.rectangleParent}>
             <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
             <View style={styles.discountQuantityParent}>
-              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/discount.png')} />
-
               <Text
                 style={styles.discountQuantity}
               >
                 Discount
               </Text>
-            </View>
-            <View style={styles.phoneParent}>
 
               <Text style={styles.karton}>
-                1000 Karton
+                5 % @ 1000 Karton
               </Text>
             </View>
           </View>
@@ -188,6 +180,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingTop: 10,
+    marginLeft: 5,
     flexDirection: "column",
   },
   imageCard: {
@@ -201,16 +194,18 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   discountQuantityParent: {
-    flexDirection: "row",
-    alignItems: "center",
     marginBottom: 5,
+    backgroundColor: "#1B5FE3",
+    width: 80,
+    alignItems: "center",
+    borderRadius: 4
   },
   discountQuantity: {
-    color: 'black',
-    lineHeight: 10,
-    fontSize: 10,
+    color: '#fff',
+    fontSize: 12,
     paddingLeft: 2,
     marginTop: 3,
+    textAlign: "center"
   },
   phoneParent: {
     justifyContent: "center",
@@ -228,13 +223,16 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   karton: {
-    width: 66,
     textAlign: "center",
-    marginLeft: 5,
-    color: "red",
-    fontFamily: 'Mulish-Regular',
-    lineHeight: 10,
-    fontSize: FontSize.size_3xs,
+    fontFamily: 'Mulish-Bold',
+    fontSize: 12,
+    width: 80,
+    color: "#1B5FE3",
+    backgroundColor: "#fff",
+    borderWidth: 0.5,
+    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: 4,
+    borderColor: "#1B5FE3"
   },
   subContentText: {
     textAlign: "left",
