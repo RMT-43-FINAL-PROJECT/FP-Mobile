@@ -1,8 +1,8 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CardHomeOverview from "../components/CardHomeOverview";
 import CardHomeScheduleVisit from "../components/CardHomeScheduleVisit";
 
-export default function Home() {
+export default function Home({ navigation }) {
     return (
         <ScrollView style={styles.outerContainer}>
             <View style={styles.containerSalesName}>
@@ -16,7 +16,9 @@ export default function Home() {
                             <Text style={styles.counterText}>1</Text>
                         </View>
                     </View>
-                    <Image style={styles.settingsLineIcon} contentMode="cover" source={require('../assets/icons/settings.png')} />
+                    <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+                        <Image style={styles.settingsLineIcon} contentMode="cover" source={require('../assets/icons/settings.png')} />
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.componentParent}>
