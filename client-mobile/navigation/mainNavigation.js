@@ -10,6 +10,7 @@ import Home from '../screens/home';
 import DetailVisit from '../screens/detailVisit';
 import MonthlySales from '../screens/monthlySales';
 import Settings from '../screens/settings';
+import DetailOrder from '../screens/detailOrder';
 
 const Stack = createNativeStackNavigator()
 
@@ -59,6 +60,13 @@ const mainNavigation = () => {
           component={OrderList}
           options={{
             headerTitle: 'Order List'
+          }}
+        />
+        <Stack.Screen
+          name="DetailOrder"
+          component={DetailOrder}
+          options={{
+            headerTitle: 'Detail Order'
           }}
         />
         <Stack.Screen

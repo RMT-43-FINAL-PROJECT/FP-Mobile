@@ -1,39 +1,46 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function CardOrderList() {
+    const navigation = useNavigation()
     return (
-        <View style={styles.frameParent}>
-            <View style={styles.instanceWrapper}>
-                <View style={styles.orderNumberParent}>
-                    <Text style={styles.orderNumberTitle}>Order Number</Text>
-                    <Text style={styles.orderNumberText}>ON-98765434338</Text>
-                </View>
-            </View>
-            <View style={styles.frameGroup}>
-                <View style={styles.storeNameParent}>
-                    <Text style={styles.contentTitle}>Store Name</Text>
-                    <View style={styles.parentMainContent}>
-                        <Image style={styles.iconLayout} source={require('../assets/icons/location.png')} />
-                        <Text style={styles.mainContent}>Toko Pak Ganjar</Text>
+
+        <TouchableOpacity onPress={() => {
+            navigation.navigate('DetailOrder')
+        }}>
+            <View style={styles.frameParent}>
+                <View style={styles.instanceWrapper}>
+                    <View style={styles.orderNumberParent}>
+                        <Text style={styles.orderNumberTitle}>Order Number</Text>
+                        <Text style={styles.orderNumberText}>ON-98765434338</Text>
                     </View>
                 </View>
-                <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-                <View style={styles.storeNameParent}>
-                    <Text style={styles.contentTitle}>Total Billed</Text>
-                    <View style={styles.parentMainContent}>
-                        <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
-                        <Text style={styles.mainContent}>Rp 2.000.000</Text>
+                <View style={styles.frameGroup}>
+                    <View style={styles.storeNameParent}>
+                        <Text style={styles.contentTitle}>Store Name</Text>
+                        <View style={styles.parentMainContent}>
+                            <Image style={styles.iconLayout} source={require('../assets/icons/location.png')} />
+                            <Text style={styles.mainContent}>Toko Pak Ganjar</Text>
+                        </View>
                     </View>
                     <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-                </View>
-                <View style={styles.storeNameParent}>
-                    <Text style={styles.contentTitle}>Status</Text>
-                    <View style={styles.parentMainContent}>
-                        <Text style={styles.confirmStatus}>Confirmed</Text>
+                    <View style={styles.storeNameParent}>
+                        <Text style={styles.contentTitle}>Total Billed</Text>
+                        <View style={styles.parentMainContent}>
+                            <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
+                            <Text style={styles.mainContent}>Rp 2.000.000</Text>
+                        </View>
+                        <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
+                    </View>
+                    <View style={styles.storeNameParent}>
+                        <Text style={styles.contentTitle}>Status</Text>
+                        <View style={styles.parentMainContent}>
+                            <Text style={styles.confirmStatus}>Confirmed</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </View >
+            </View >
+        </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
