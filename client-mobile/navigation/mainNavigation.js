@@ -11,6 +11,8 @@ import DetailVisit from '../screens/detailVisit';
 import MonthlySales from '../screens/monthlySales';
 import Settings from '../screens/settings';
 import DetailOrder from '../screens/detailOrder';
+import MainBottomTab from './mainBottomTab';
+import CreateStore from '../screens/createStore';
 
 const Stack = createNativeStackNavigator()
 
@@ -22,7 +24,7 @@ const mainNavigation = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={MainBottomTab}
           options={{
             headerTitle: 'Home'
           }}
@@ -74,6 +76,13 @@ const mainNavigation = () => {
           component={Settings}
           options={{
             headerTitle: 'Settings'
+          }}
+        />
+        <Stack.Screen
+          name="CreateStore"
+          component={CreateStore}
+          options={{
+            headerTitle: 'Create Store'
           }}
         />
       </Stack.Navigator>

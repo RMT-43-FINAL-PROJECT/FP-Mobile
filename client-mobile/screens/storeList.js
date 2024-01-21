@@ -13,7 +13,7 @@ export default function StoreList({ navigation }) {
                             placeholder="Search Store .."
                         />
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate('ProductList')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('CreateStore')}>
                         <Image source={require('../assets/icons/createblue.png')} style={styles.iconCreate} />
 
                         {/* <Text style={styles.storeText}>Create new store</Text> */}
