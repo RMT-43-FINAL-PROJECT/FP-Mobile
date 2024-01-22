@@ -1,42 +1,119 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CardHomeOverview from "../components/CardHomeOverview";
 import CardHomeScheduleVisit from "../components/CardHomeScheduleVisit";
+import { useEffect, useState } from "react";
+import { getValueFor } from "../helpers/secureStore";
 
 export default function Home({ navigation }) {
+    const [data, setData] = useState([])
+
+    const dataUser = async () => {
+        try {
+            const token = await getValueFor('access_token')
+            if (token) {
+                const response = await fetch('https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/users/userprofile', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if (response.ok) {
+                    const data = await response.json();
+                    setData(data)
+
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Access token not found.');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        dataUser()
+    }, [])
+
+    const [schedule, setSchedule] = useState([])
+    const [refreshing, setRefreshing] = useState(false);
+
+    const dataSchedule = async () => {
+        try {
+            const token = await getValueFor('access_token');
+            if (token) {
+                const response = await fetch('https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/schedules/myschedule', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    setSchedule(result);
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Access token not found.');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        dataSchedule();
+        setRefreshing(false);
+    };
+
+    useEffect(() => {
+        dataSchedule();
+    }, []);
+
+    const renderItem = ({ item }) => (
+        <CardHomeScheduleVisit data={item} />
+    );
+
     return (
-        <ScrollView style={styles.outerContainer}>
-            <View style={styles.containerSalesName}>
-                <Image style={styles.notifIconPosition} contentMode="cover" source={{ uri: "https://m.media-amazon.com/images/M/MV5BMmY2OGM1NjEtNGRiZi00NGY5LThjMzMtOTViYTMwOGM2YmE0XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_FMjpg_UX1000_.jpg" }} />
-                <Text style={styles.salesNameText}>Budi Budiman</Text>
-                <View style={styles.headerIconContainer}>
-                    <View style={styles.iconsParent}>
-                        <Image style={styles.notifIconLayout} contentMode="cover" source={require('../assets/icons/notif.png')} />
-                        <View style={styles.counterLayout}>
-                            <Image style={styles.circleCounter} contentMode="cover" source={require('../assets/icons/counter.png')} />
-                            <Text style={styles.counterText}>1</Text>
+        <FlatList
+            style={styles.outerContainer}
+            ListHeaderComponent={
+                <>
+                    <View style={styles.containerSalesName}>
+                        <Image style={styles.notifIconPosition} resizeMode="cover" source={{ uri: data.photo }} />
+                        <Text style={styles.salesNameText}>{data.name}</Text>
+                        <View style={styles.headerIconContainer}>
+                            <View style={styles.iconsParent}>
+                                <Image style={styles.notifIconLayout} resizeMode="cover" source={require('../assets/icons/notif.png')} />
+                                <View style={styles.counterLayout}>
+                                    <Image style={styles.circleCounter} resizeMode="cover" source={require('../assets/icons/counter.png')} />
+                                    <Text style={styles.counterText}>1</Text>
+                                </View>
+                            </View>
+                            <TouchableOpacity onPress={() => navigation.navigate('Settings', { data: data })}>
+                                <Image style={styles.settingsLineIcon} resizeMode="cover" source={require('../assets/icons/settings.png')} />
+                            </TouchableOpacity>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-                        <Image style={styles.settingsLineIcon} contentMode="cover" source={require('../assets/icons/settings.png')} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.componentParent}>
-                <Text style={styles.headerTitleOverview}>Sales Overview</Text>
-                <View style={styles.overviewParent}>
-                    <CardHomeOverview />
-                </View>
-                <Text style={styles.headerTitle}>Scheduled Visit</Text>
-                <View style={styles.scheduleParent}>
-                    <CardHomeScheduleVisit />
-                    <CardHomeScheduleVisit />
-                    <CardHomeScheduleVisit />
-                    <CardHomeScheduleVisit />
-                    <CardHomeScheduleVisit />
-                    <CardHomeScheduleVisit />
-                </View>
-            </View>
-        </ScrollView>
+                    <View style={styles.componentParent}>
+                        <Text style={styles.headerTitleOverview}>Sales Overview</Text>
+                        <View style={styles.overviewParent}>
+                            <CardHomeOverview />
+                        </View>
+                        <Text style={styles.headerTitle}>Scheduled Visit</Text>
+                    </View>
+                </>
+            }
+            data={schedule}
+            keyExtractor={(item) => item._id.toString()} // Update with your unique key property
+            renderItem={renderItem}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+            }
+        />
     )
 }
 const styles = StyleSheet.create({
@@ -57,12 +134,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#f6f9ff",
         height: "100%",
         paddingHorizontal: 25,
-        flex: 1,
         gap: 90,
     },
     componentParent: {
         backgroundColor: "#f6f9ff",
-        height: "100%",
+        flex: 1,
+        height: "auto",
+        width: "100%",
         paddingHorizontal: 25,
         paddingTop: 15,
     },

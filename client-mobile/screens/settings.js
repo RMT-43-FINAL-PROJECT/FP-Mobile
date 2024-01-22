@@ -2,8 +2,11 @@ import { useContext, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { deleteStore } from "../helpers/secureStore";
 import { AuthContext } from "../context/AuthContext";
+import { formatDate } from "../helpers/formatter";
 
-export default function Settings() {
+export default function Settings({ route }) {
+    const data = route.params
+    console.log(data, "<<<<");
     const authContext = useContext(AuthContext)
 
     const [isExpanded, setIsExpanded] = useState(false);
@@ -18,10 +21,10 @@ export default function Settings() {
                 <View style={styles.frameWrapper}>
                     <View style={styles.frameGroup}>
                         <View style={styles.frameContainer}>
-                            <Image style={styles.profilePicture} contentMode="cover" source={{ uri: "https://m.media-amazon.com/images/M/MV5BMmY2OGM1NjEtNGRiZi00NGY5LThjMzMtOTViYTMwOGM2YmE0XkEyXkFqcGdeQXVyNzY1ODU1OTk@._V1_FMjpg_UX1000_.jpg" }} />
+                            <Image style={styles.profilePicture} contentMode="cover" source={{ uri: data.data.photo }} />
 
                             <View style={styles.userNameWrapper}>
-                                <Text style={styles.userName}>Budi Budiman</Text>
+                                <Text style={styles.userName}>{data.data.name}</Text>
                             </View>
                         </View>
                         <TouchableOpacity onPress={handleArrowPress}>
@@ -34,25 +37,25 @@ export default function Settings() {
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Email</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>sapauser@mail.com</Text>
+                                    <Text style={styles.label1}>{data.data.email}</Text>
                                 </View>
                             </View>
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Mobile Phone</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>+62836147836</Text>
+                                    <Text style={styles.label1}>{data.data.mobilePhone}</Text>
                                 </View>
                             </View>
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Joined Date</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>10 September 2020</Text>
+                                    <Text style={styles.label1}>{formatDate(data.data.joinDate)}</Text>
                                 </View>
                             </View>
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Address</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>Jl. Andaliman no 10</Text>
+                                    <Text style={styles.label1}>{data.data.address}</Text>
                                 </View>
                             </View>
                             <View style={[styles.buttonBasicWrapper, styles.textFieldSpaceBlock]}>
