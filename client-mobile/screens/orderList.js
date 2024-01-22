@@ -5,8 +5,8 @@ import { getValueFor } from "../helpers/secureStore";
 
 export default function OrderList() {
     const [data, setData] = useState([])
-    const [refreshing, setRefreshing] = useState(false); // State for refreshing
-    const [searchText, setSearchText] = useState(''); // State for search input
+    const [refreshing, setRefreshing] = useState(false);
+    const [searchText, setSearchText] = useState('');
 
 
     const dataOrderList = async () => {
@@ -21,7 +21,7 @@ export default function OrderList() {
                 if (response.ok) {
                     const data = await response.json();
                     setData(data.data)
-                    setRefreshing(false); // Set refreshing to false after data is fetched
+                    setRefreshing(false);
 
                 } else {
                     console.error('Request failed with status:', response.status);
@@ -39,8 +39,8 @@ export default function OrderList() {
     }, [])
 
     const handleRefresh = () => {
-        setRefreshing(true); // Set refreshing to true
-        dataOrderList(); // Fetch data
+        setRefreshing(true);
+        dataOrderList();
     };
 
     const filteredData = data.filter((item) =>
