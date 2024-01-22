@@ -21,12 +21,7 @@ export default function Login({ navigation }) {
                         secureTextEntry
                     />
                 </View>
-                <View style={styles.checkboxContainer}>
-                    <View style={styles.checkbox} />
-                    <Text style={styles.inputText}>Remember Me</Text>
-                </View>
             </View>
-            <Text style={styles.forgotPassword}>forgot password?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.proceedButton}>
                 <Text style={styles.proceedText}>Login</Text>
             </TouchableOpacity>
