@@ -1,7 +1,37 @@
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import CardStoreList from "../components/CardStoreList";
+import { useEffect, useState } from "react";
 
 export default function StoreList({ navigation }) {
+    const [data, setData] = useState([])
+    const [refreshing, setRefreshing] = useState(false); // State for refreshing
+    const [searchQuery, setSearchQuery] = useState(''); // State for search input
+
+    const fetchStoreData = async () => {
+        try {
+            const response = await fetch(`https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/stores/mobile?search=${searchQuery}`, {
+                method: 'GET'
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                setData(result);
+                setRefreshing(false);
+            } else {
+                console.error('Request failed with status:', response.status);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchStoreData();
+    }, [searchQuery]);
+
+    const renderItem = ({ item }) => (
+        <CardStoreList data={item} />
+    );
     return (
         <View style={styles.outerContainer}>
             <View style={styles.componentParent}>
@@ -11,15 +41,21 @@ export default function StoreList({ navigation }) {
                         <TextInput
                             style={styles.input}
                             placeholder="Search Store .."
+                            onChangeText={(text) => setSearchQuery(text)}
                         />
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('CreateStore')}>
                         <Image source={require('../assets/icons/createblue.png')} style={styles.iconCreate} />
-
-                        {/* <Text style={styles.storeText}>Create new store</Text> */}
                     </TouchableOpacity>
                 </View>
-                <CardStoreList />
+                <FlatList
+                    data={data}
+                    keyExtractor={(item) => item._id.toString()}
+                    renderItem={renderItem}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={fetchStoreData} />
+                    }
+                />
             </View>
         </View>
     )
@@ -28,7 +64,7 @@ export default function StoreList({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 5,
+        paddingHorizontal: 20,
         flexDirection: "row",
         alignItems: "center"
     },
@@ -65,10 +101,9 @@ const styles = StyleSheet.create({
     componentParent: {
         backgroundColor: "#f6f9ff",
         height: "100%",
-        paddingHorizontal: 26,
+        width: "100%",
         paddingTop: 10,
         paddingBottom: 25,
-        right: -8,
         position: "absolute",
         overflow: "hidden"
     },

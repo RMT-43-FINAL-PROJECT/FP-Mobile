@@ -1,26 +1,34 @@
 import { Image, StyleSheet, Text, View, title } from "react-native";
 
-export default function CardStoreList() {
+export default function CardStoreList({ data }) {
     return (
         <>
             <View style={styles.rectangleShadowBox}>
                 <View style={styles.frameParent}>
                     <View style={styles.imageContainer}>
                         <Image style={styles.imageCard} source={{
-                            uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
+                            uri: data.photo,
                         }} />
                     </View>
                     <View style={styles.headerContainer}>
                         <View style={styles.frameGroup}>
                             <View style={styles.cardTitle}>
-                                <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/location.png')} />
-                                <Text style={styles.headerCardText}>Toko Pak Anies</Text>
-
-                                {/* <Text style={[status === 'verified' ? styles.verified : styles.unverified, styles.verifiedText]}>verified</Text>
-                            {status === 'verified' && <Image style={styles.image1Icon} contentMode="cover" source="image 1.png" />} */}
+                                <View style={styles.titleParent}>
+                                    <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/location.png')} />
+                                    <Text style={styles.headerCardText}>{data.name}</Text>
+                                </View>
                                 <View style={styles.verifiedParent}>
-                                    <Text style={styles.verifiedText}>verified</Text>
-                                    <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/verified.png')} />
+                                    {data.status === 'unverified' ? (
+                                        <>
+                                            <Text style={styles.unverified}>unverified</Text>
+                                            <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/warning.png')} />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Text style={styles.verifiedText}>{data.status}</Text>
+                                            <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/verified.png')} />
+                                        </>
+                                    )}
                                 </View>
                             </View>
                         </View>
@@ -29,62 +37,19 @@ export default function CardStoreList() {
                     <Text style={styles.address} >Address</Text>
                     <View style={styles.parentContentContainer}>
                         <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/address.png')} />
-                        <Text style={styles.addressContent} numberOfLines={3}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                        <Text style={styles.addressContent} numberOfLines={3}>{data.address}</Text>
                     </View>
                     <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address}>Owner's Name</Text>
                     <View style={styles.parentContentContainer}>
                         <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/user.png')} />
-                        <Text style={styles.addressContent} numberOfLines={2}>Anies Beston</Text>
+                        <Text style={styles.addressContent} numberOfLines={2}>{data.ownerName}</Text>
                     </View>
                     <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
                     <Text style={styles.address}>Phone number</Text>
                     <View style={styles.parentContentContainer}>
                         <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/phonegray.png')} />
-                        <Text style={styles.addressContent} numberOfLines={2}>+621-67894892</Text>
-                    </View>
-                </View>
-            </View>
-
-            <View style={styles.rectangleShadowBox}>
-                <View style={styles.frameParent}>
-                    <View style={styles.imageContainer}>
-                        <Image style={styles.imageCard} source={{
-                            uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
-                        }} />
-                    </View>
-                    <View style={styles.headerContainer}>
-                        <View style={styles.frameGroup}>
-                            <View style={styles.cardTitle}>
-                                <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/location.png')} />
-                                <Text style={styles.headerCardText}>Toko Pak Anies</Text>
-
-                                {/* <Text style={[status === 'verified' ? styles.verified : styles.unverified, styles.verifiedText]}>verified</Text>
-                            {status === 'verified' && <Image style={styles.image1Icon} contentMode="cover" source="image 1.png" />} */}
-                                <View style={styles.verifiedParent}>
-                                    <Text style={styles.unverified}>unverified</Text>
-                                    <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/warning.png')} />
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
-                    <Text style={styles.address} >Address</Text>
-                    <View style={styles.parentContentContainer}>
-                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/address.png')} />
-                        <Text style={styles.addressContent} numberOfLines={3}>Lorem Ipsum is simply dummy text of the printing and typesetting industry</Text>
-                    </View>
-                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
-                    <Text style={styles.address}>Owner's Name</Text>
-                    <View style={styles.parentContentContainer}>
-                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/user.png')} />
-                        <Text style={styles.addressContent} numberOfLines={2}>Anies Beston</Text>
-                    </View>
-                    <Image style={styles.separatorsIcon} contentMode="cover" source={require('../assets/icons/separators.png')} />
-                    <Text style={styles.address}>Phone number</Text>
-                    <View style={styles.parentContentContainer}>
-                        <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/phonegray.png')} />
-                        <Text style={styles.addressContent} numberOfLines={2}>+621-67894892</Text>
+                        <Text style={styles.addressContent} numberOfLines={2}>{data.mobilePhone}</Text>
                     </View>
                 </View>
             </View>
@@ -95,7 +60,7 @@ const styles = StyleSheet.create({
     rectangleShadowBox: {
         marginTop: 10,
         height: 320,
-        width: 355,
+        width: 350,
         shadowOpacity: 1,
         elevation: 2,
         shadowRadius: 2,
@@ -107,7 +72,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: "#fff",
         flexDirection: "row",
-        marginBottom: 5
+        marginBottom: 5,
+        marginHorizontal: 20
     },
     imageContainer: {
         marginTop: 10,
@@ -126,6 +92,11 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: "row"
     },
+    titleParent: {
+        alignItems: "center",
+        flexDirection: "row",
+        width: 270
+    },
     cardTitle: {
         alignItems: "center",
         flexDirection: "row",
@@ -137,17 +108,16 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     verifiedParent: {
-        width: 210,
-        justifyContent: "flex-end",
+        width: 70,
+        alignItems: "center",
         flexDirection: "row",
-        alignItems: "center"
     },
     verifiedText: {
         fontSize: 10,
         textAlign: "left",
         fontFamily: "Mulish-Regular",
         lineHeight: 20,
-        color: "#0099fa"
+        color: "#0099fa",
     },
     componentChild: {
         borderRadius: 5
