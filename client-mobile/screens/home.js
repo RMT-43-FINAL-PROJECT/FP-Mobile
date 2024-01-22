@@ -74,7 +74,10 @@ export default function Home({ navigation }) {
     }, []);
 
     const renderItem = ({ item }) => (
-        <CardHomeScheduleVisit data={item} />
+        <View style={styles.scheduleParentCard}>
+            <CardHomeScheduleVisit data={item} />
+        </View>
+
     );
 
     return (
@@ -103,8 +106,9 @@ export default function Home({ navigation }) {
                         <View style={styles.overviewParent}>
                             <CardHomeOverview />
                         </View>
-                        <Text style={styles.headerTitle}>Scheduled Visit</Text>
                     </View>
+                    <Text style={styles.headerTitle}>Scheduled Visit</Text>
+
                 </>
             }
             data={schedule}
@@ -132,14 +136,15 @@ const styles = StyleSheet.create({
     },
     scheduleParent: {
         backgroundColor: "#f6f9ff",
-        height: "100%",
         paddingHorizontal: 25,
-        gap: 90,
+    },
+    scheduleParentCard: {
+        gap: 50
     },
     componentParent: {
         backgroundColor: "#f6f9ff",
         flex: 1,
-        height: "auto",
+        height: 400,
         width: "100%",
         paddingHorizontal: 25,
         paddingTop: 15,
@@ -228,11 +233,12 @@ const styles = StyleSheet.create({
         backgroundColor: "red",
     },
     headerTitle: {
+        marginTop: 10,
+        marginLeft: 25,
         fontSize: 16,
         fontFamily: "Mulish-Bold",
         textAlign: "left",
         color: "black",
-        marginTop: 10,
     },
 
 });

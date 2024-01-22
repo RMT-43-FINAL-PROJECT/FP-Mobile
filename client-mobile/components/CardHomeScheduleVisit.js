@@ -1,29 +1,31 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { formatDate, formatTimestampToDateString, formatTimestampToTimeString } from "../helpers/formatter";
 
 export default function CardHomeScheduleVisit({ data }) {
-    // console.log(data, '<<<<');
     const navigation = useNavigation()
     return (
         <>
             <View style={styles.contentContainer}>
-                <TouchableOpacity style={styles.rectangleParent} onPress={() => navigation.navigate('DetailVisit')}>
+                <TouchableOpacity style={styles.rectangleParent} onPress={() => navigation.navigate('DetailVisit', { data: data })}>
                     <Image style={styles.imageStore} source={{
                         uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
                     }} />
                     <View style={styles.mainContentContainer}>
-                        <Text style={styles.mainContentTitle}>Toko Budi</Text>
+                        <Text style={styles.mainContentTitle}>{data.storeInformations.name}</Text>
                         <View style={styles.subContentContainer}>
                             <Text style={styles.content}>Date</Text>
-                            <Text style={[styles.contentRightColor, styles.contentRight]}>Wed, 29 Nov 2025</Text>
+                            <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToDateString(data.time)}</Text>
                         </View>
                         <View style={styles.subContentContainer}>
                             <Text style={styles.content}>Time</Text>
-                            <Text style={[styles.contentRightColor, styles.contentRight]}>10.00 AM</Text>
+                            <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToTimeString(data.time)}</Text>
                         </View>
                         <View style={styles.subContentContainer}>
                             <Text style={styles.content}>Status</Text>
-                            <Text style={[styles.completedColor, styles.contentRight]}>Completed</Text>
+                            <Text style={[data.isCompleted ? styles.completedColor : styles.pending, styles.contentRight]}>
+                                {data.isCompleted ? 'Completed' : 'Pending'}
+                            </Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -35,6 +37,8 @@ const styles = StyleSheet.create({
 
     contentContainer: {
         marginTop: 5,
+        marginBottom: 100,
+        marginHorizontal: 30
     },
     rectangleParent: {
         marginTop: 12,

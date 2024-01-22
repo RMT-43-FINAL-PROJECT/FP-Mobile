@@ -1,20 +1,17 @@
-import { useEffect, useState } from "react";
-import { Alert, Button, Image, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react"
+import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import * as ImagePicker from 'expo-image-picker';
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
 import { getValueFor } from "../helpers/secureStore";
 
-export default function CreateStore() {
-    const [name, setName] = useState("toko ani");
-    const [address, setAddress] = useState("jl abcd");
-    const [ownerName, setOwnerName] = useState("budi");
-    const [mobilePhone, setMobilePhone] = useState("0899998888");
-    const [longitude, setLongitude] = useState("");
-    const [latitude, setLatitude] = useState("");
-    const [image, setImage] = useState(null);
-    const [markerCoordinate, setMarkerCoordinate] = useState(null);
-    const [modalVisible, setModalVisible] = useState(false);
+
+export default function UpdateProfile({ route }) {
+    const data = route.params
+    // console.log(data.data.data._id, "<<< settings");
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [mobilePhone, setMobilePhone] = useState('')
+    const [address, setAddress] = useState('')
+    const [photo, setPhoto] = useState('')
 
     useEffect(() => {
         (async () => {
@@ -39,111 +36,74 @@ export default function CreateStore() {
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            setPhoto(result.assets[0].uri);
         }
     };
 
+
     const handleFormSubmit = async () => {
+        const userId = data.data.data._id
         try {
             const token = await getValueFor('access_token')
-            let localUri = image;
+            let localUri = photo;
             let filename = localUri.split("/").pop();
             let match = /\.(\w+)$/.exec(filename);
             let type = match ? `image/${match[1]}` : `image`;
             const formData = new FormData();
             formData.append("name", name);
-            formData.append("address", address);
-            formData.append("ownerName", ownerName);
+            formData.append("email", email);
             formData.append("mobilePhone", mobilePhone);
-            formData.append("longitude", longitude);
-            formData.append("latitude", latitude);
+            formData.append("address", address);
             formData.append("photo", { uri: localUri, name: filename, type });
             const response = await fetch(
-                "https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/stores",
+                `https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/users/${userId}`,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
                     },
-                    method: "POST",
+                    method: "PUT",
                     body: formData,
                 }
             );
 
             if (!response.ok) {
-                const data = await response.json();
-                console.log(data, '<<<<<');
-                Alert.alert("Failed to create store", data.message);
+                const result = await response.json();
+                console.log(result, '<<<<<');
+                Alert.alert("Failed to update profile", result.message);
             }
 
-            const data = await response.json();
-            console.log(data);
-            Alert.alert("Success!", "Created store");
+            const result = await response.json();
+            console.log(result);
+            Alert.alert("Success!", "Updated your profile");
         } catch (error) {
             console.error("Error:", error);
-            Alert.alert("Error", "Failed to create store");
+            Alert.alert("Error", "Failed to update your profile");
         }
-    };
-
-    const fetchUserLocation = async () => {
-        try {
-            const { status } =
-                await Location.requestForegroundPermissionsAsync();
-            if (status !== "granted") {
-                throw new Error("Location permission not granted");
-            }
-
-            const location = await Location.getCurrentPositionAsync({
-                enableHighAccuracy: true
-            });
-            setLongitude(`${location.coords.longitude}`);
-            setLatitude(`${location.coords.latitude}`);
-            setMarkerCoordinate({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            })
-        } catch (error) {
-            console.error("Error fetching user location:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchUserLocation()
-        console.log(longitude, '<<<< longitude');
-        console.log(latitude, '<<<< latitude');
-    }, []);
-
-    const handleMapPress = (event) => {
-        const { coordinate } = event.nativeEvent;
-        setMarkerCoordinate(coordinate);
-        setModalVisible(true);
-    };
-
-    const setStoreLocation = () => {
-        if (markerCoordinate) {
-            console.log(markerCoordinate.longitude, '<<<');
-            setLongitude(markerCoordinate.longitude)
-            setLatitude(markerCoordinate.latitude)
-        }
-        setModalVisible(false);
-    };
-    const closeModal = () => {
-        setModalVisible(false);
     };
     return (
         <View style={styles.outerContainer}>
             <ScrollView style={styles.componentParent}>
                 <View style={styles.container}>
-                    <Text style={styles.label}>Store Name</Text>
+                    <Text style={styles.label}>Name</Text>
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.inputText}
-                            placeholder="Toko Pak Budi"
+                            placeholder="Lionel Messi"
                             value={name}
                             onChangeText={(text) => {
                                 setName(text)
+                            }}
+                        />
+                    </View>
+                    <Text style={styles.label}>Email</Text>
+                    <View style={styles.inputContainer}>
+                        <TextInput
+                            style={styles.inputText}
+                            placeholder="messi@mail.com"
+                            value={email}
+                            onChangeText={(text) => {
+                                setEmail(text)
                             }}
                         />
                     </View>
@@ -151,21 +111,10 @@ export default function CreateStore() {
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.inputText}
-                            placeholder="Jl. Senen Raya no 90"
+                            placeholder="Jl. Bondon no 20"
                             value={address}
                             onChangeText={(text) => {
                                 setAddress(text)
-                            }}
-                        />
-                    </View>
-                    <Text style={styles.label}>Owner's Name</Text>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.inputText}
-                            placeholder="Pak Bowo"
-                            value={ownerName}
-                            onChangeText={(text) => {
-                                setOwnerName(text)
                             }}
                         />
                     </View>
@@ -182,23 +131,6 @@ export default function CreateStore() {
                         />
                     </View>
 
-                    <Text style={styles.label}>Locate the store</Text>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.uploadImageText}
-                            editable={false}
-                        >
-                            <Text>{longitude}   </Text>
-                            <Text>{latitude}</Text>
-                        </TextInput>
-                        <TouchableOpacity onPress={() => setModalVisible(true)}>
-                            <View style={styles.buttonContainer}>
-                                <Text style={styles.buttonSubmitText}>Open Map</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                    </View>
-
                     <Text style={styles.label}>Upload Image</Text>
                     <View style={styles.inputContainer}>
                         <Text
@@ -212,50 +144,17 @@ export default function CreateStore() {
                         </TouchableOpacity>
 
                     </View>
-                    {image && <Image source={{ uri: image }} style={styles.image} />}
+                    {photo && <Image source={{ uri: photo }} style={styles.image} />}
                     <TouchableOpacity onPress={handleFormSubmit}>
                         <View style={styles.buttonContainerUpload}>
                             <Text style={styles.buttonSubmitText}>Submit</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <Modal animationType="slide" transparent={true} visible={modalVisible}>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContent}>
-                            <TouchableOpacity onPress={closeModal} style={styles.iconButtonClose}>
-                                <Image style={styles.iconLayoutClose} contentMode="cover" source={require('../assets/icons/closemodal.png')} />
-                            </TouchableOpacity>
-                            <MapView
-                                style={styles.mapInModal}
-                                onPress={handleMapPress}
-                                initialRegion={{
-                                    latitude: markerCoordinate?.latitude || latitude,
-                                    longitude: markerCoordinate?.longitude || longitude,
-                                    latitudeDelta: 0.0922,
-                                    longitudeDelta: 0.0421,
-                                }}
-                            >
-                                {markerCoordinate && (
-                                    <Marker
-                                        coordinate={markerCoordinate}
-                                        title="Selected Location"
-                                    />
-                                )}
-                            </MapView>
-                            <TouchableOpacity onPress={fetchUserLocation} style={styles.iconButton}>
-                                <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/mylocation.png')} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={setStoreLocation} style={styles.closeButton}>
-                                <Text style={styles.closeButtonText}>Set Store Location</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
             </ScrollView>
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 10
@@ -290,11 +189,11 @@ const styles = StyleSheet.create({
         left: 305
     },
     image: {
-        left: 20,
-        width: 280,
+        left: 100,
+        width: 120,
         height: 120,
         marginTop: 5,
-        borderRadius: 8
+        borderRadius: 75
     },
     inputContainer: {
         backgroundColor: "#fff",

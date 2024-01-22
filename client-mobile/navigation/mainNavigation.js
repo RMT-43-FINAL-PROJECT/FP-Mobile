@@ -15,6 +15,7 @@ import MainBottomTab from './mainBottomTab';
 import CreateStore from '../screens/createStore';
 import { AuthContext } from '../context/AuthContext';
 import { getValueFor } from '../helpers/secureStore';
+import UpdateProfile from '../screens/updateProfile';
 
 const Stack = createNativeStackNavigator()
 
@@ -98,6 +99,13 @@ const mainNavigation = () => {
               component={CreateStore}
               options={{
                 headerTitle: 'Create Store'
+              }}
+            />
+            <Stack.Screen
+              name="UpdateProfile"
+              component={UpdateProfile}
+              options={{
+                headerTitle: 'Update Profile'
               }}
             />
           </> : <>
