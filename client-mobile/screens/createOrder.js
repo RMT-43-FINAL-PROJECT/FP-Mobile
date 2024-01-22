@@ -197,6 +197,7 @@ export default function CreateOrder() {
                         <TextInput
                             style={styles.inputText}
                             placeholder={price || `automatically adjust price`}
+                            // value={quantity >= discQty ? price * (1 - discPercent) : price}
                             value={price}
                             editable={false}
                         />
@@ -207,6 +208,7 @@ export default function CreateOrder() {
                             style={styles.inputText}
                             placeholder="Ex: 1000 Karton"
                             keyboardType="numeric"
+                            value={quantity}
                         />
                     </View>
                     <TouchableOpacity>
