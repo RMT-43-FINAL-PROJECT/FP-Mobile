@@ -1,14 +1,15 @@
 import { StyleSheet, View, Text } from "react-native";
 import { Image } from "expo-image";
 import { Color, FontFamily, FontSize, Border, Padding } from "../style/GlobalStyles";
+import { formatPriceToIDR } from "../helpers/formatter";
 
-const CardProductList = () => {
+const CardProductList = ({ data }) => {
   return (
     <>
       <View style={styles.rectangleShadowBox}>
         <View style={styles.frameParent}>
           <View style={styles.rectangleParent}>
-            <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
+            <Image source={{ uri: data.image }} style={styles.imageCard} />
             <View style={styles.discountQuantityParent}>
               <Text
                 style={styles.discountQuantity}
@@ -17,32 +18,39 @@ const CardProductList = () => {
               </Text>
 
               <Text style={styles.karton}>
-                5 % @ 1000 Karton
+                {data.discPercent} % @ {data.discQty}
               </Text>
             </View>
           </View>
           <View style={styles.frameGroup}>
             <View style={styles.headerTitleContainer}>
-              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/product.png')} />
-
-              <Text style={styles.textTitle}>
-                Indomie Goreng
-              </Text>
-              <Text style={styles.availableText}>
-                available
-              </Text>
+              <View style={styles.headerTitleContainerLeft}>
+                <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/product.png')} />
+                <Text style={styles.textTitle}>
+                  {data.name}
+                </Text>
+              </View>
+              {data.isAvailable ? (
+                <Text style={styles.availableText}>
+                  available
+                </Text>
+              ) : (
+                <Text style={styles.notAvailableText}>
+                  not available
+                </Text>
+              )}
             </View>
             <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
 
             <Text style={styles.subContentTitle}>
-              Quantity
+              Stock
             </Text>
             <View
               style={styles.parentSubContent}
             >
               <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/quantity.png')} />
               <Text style={styles.subContentText}>
-                10.000.000 Karton
+                {data.stock}
               </Text>
             </View>
             <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
@@ -55,7 +63,7 @@ const CardProductList = () => {
             >
               <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/price.png')} />
               <Text style={styles.subContentText}>
-                Rp 100.000
+                {formatPriceToIDR(data.price)}
               </Text>
             </View>
             <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
@@ -67,81 +75,13 @@ const CardProductList = () => {
             >
               <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/category.png')} />
               <Text style={styles.subContentText}>
-                Makanan Instant
+                {data.category}
               </Text>
             </View>
           </View>
         </View>
       </View>
 
-      <View style={styles.rectangleShadowBox}>
-        <View style={styles.frameParent}>
-          <View style={styles.rectangleParent}>
-            <Image source={{ uri: "https://www.indomie.com/uploads/product/indomie-mi-goreng-special_detail_094906814.png" }} style={styles.imageCard} />
-            <View style={styles.discountQuantityParent}>
-              <Text
-                style={styles.discountQuantity}
-              >
-                Discount
-              </Text>
-
-              <Text style={styles.karton}>
-                5 % @ 1000 Karton
-              </Text>
-            </View>
-          </View>
-          <View style={styles.frameGroup}>
-            <View style={styles.headerTitleContainer}>
-              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/product.png')} />
-
-              <Text style={styles.textTitle}>
-                Indomie Goreng
-              </Text>
-              <Text style={styles.notAvailableText}>
-                not available
-              </Text>
-            </View>
-            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-
-            <Text style={styles.subContentTitle}>
-              Quantity
-            </Text>
-            <View
-              style={styles.parentSubContent}
-            >
-              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/quantity.png')} />
-              <Text style={styles.subContentText}>
-                10.000.000 Karton
-              </Text>
-            </View>
-            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-
-            <Text style={styles.subContentTitle}>
-              Price
-            </Text>
-            <View
-              style={styles.parentSubContent}
-            >
-              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/price.png')} />
-              <Text style={styles.subContentText}>
-                Rp 100.000
-              </Text>
-            </View>
-            <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
-            <Text style={styles.subContentTitle}>
-              Category
-            </Text>
-            <View
-              style={styles.parentSubContent}
-            >
-              <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/category.png')} />
-              <Text style={styles.subContentText}>
-                Makanan Instant
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
     </>
   )
 }
@@ -163,7 +103,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "#fff",
     flexDirection: "row",
-    marginBottom: 15
+    marginBottom: 15,
+    marginHorizontal: 20
   },
   frameParent: {
     flexDirection: "row",
@@ -174,6 +115,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 5,
     alignItems: "center",
+  },
+  headerTitleContainerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "red",
+    width: 155
   },
   rectangleParent: {
     alignItems: "center",
@@ -262,7 +209,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: "Mulish-Regular",
     fontSize: 12,
-    marginLeft: 50
+    marginLeft: 15
   },
   notAvailableText: {
     color: "red",
@@ -270,7 +217,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: "Mulish-Regular",
     fontSize: 12,
-    marginLeft: 28
   },
   separatorsIcon: {
     height: 1,

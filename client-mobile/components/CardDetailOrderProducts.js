@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { formatPriceToIDR } from "../helpers/formatter";
 
 export default function CardDetailOrderProducts({ product }) {
-    const totalPrice = formatPriceToIDR(product.qtySold * product.price)
+    console.log();
     return (
         <View style={styles.frameParent}>
             <View style={styles.labelGroup}>
@@ -22,7 +22,7 @@ export default function CardDetailOrderProducts({ product }) {
             <View style={[styles.instanceParent, styles.separatorsIconSpaceBlock]}>
                 <View style={styles.totalPriceParent}>
                     <Text style={[styles.totalPrice, styles.label1]}>Total Price</Text>
-                    <Text style={[styles.text, styles.labelClr]}>{totalPrice}</Text>
+                    <Text style={[styles.text, styles.labelClr]}>{formatPriceToIDR(product.billPerItem)}</Text>
                 </View>
                 <View style={styles.frameChild} />
             </View>
