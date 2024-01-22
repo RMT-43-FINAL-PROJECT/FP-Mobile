@@ -1,9 +1,52 @@
-import { StyleSheet, View, Text, TouchableOpacity, TextInput } from "react-native";
-import { Image } from "expo-image";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, FlatList, RefreshControl } from "react-native";
 import { Color, FontFamily, FontSize, Border, Padding } from "../style/GlobalStyles";
 import CardProductList from "../components/CardProductList";
+import { useEffect, useState } from "react";
+import { getValueFor } from "../helpers/secureStore";
 
 const ProductList = ({ navigation }) => {
+    const [data, setData] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const fetchProductData = async () => {
+        try {
+            const token = await getValueFor('access_token');
+            if (token) {
+                const response = await fetch(`https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/products?search=${searchQuery}`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setData(data);
+                    setRefreshing(false);
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Access token not found.');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        fetchProductData();
+    };
+
+    useEffect(() => {
+        fetchProductData();
+    }, [searchQuery]);
+
+    const renderItem = ({ item }) => (
+        <CardProductList data={item} />
+    );
     return (
         <View style={styles.outerContainer}>
             <View style={styles.componentParent}>
@@ -12,11 +55,21 @@ const ProductList = ({ navigation }) => {
                         <Image source={require('../assets/icons/search.png')} style={styles.icon} />
                         <TextInput
                             style={styles.input}
-                            placeholder="Search Store .."
+                            placeholder="Search Product .."
+                            onChangeText={(text) => {
+                                setSearchQuery(text);
+                            }}
                         />
                     </View>
                 </View>
-                <CardProductList />
+                <FlatList
+                    data={data}
+                    keyExtractor={(item) => item._id.toString()}
+                    renderItem={renderItem}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                    }
+                />
             </View>
         </View>
     )
@@ -37,7 +90,8 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         backgroundColor: "#C3D7FF",
         borderRadius: 5,
-        height: 35
+        height: 35,
+        marginHorizontal: 20
     },
     icon: {
         width: 20,
@@ -52,12 +106,14 @@ const styles = StyleSheet.create({
     componentParent: {
         paddingTop: 10,
         backgroundColor: "#f6f9ff",
-        paddingHorizontal: 20,
+        width: "100%",
+        height: "100%"
     },
     outerContainer: {
         overflow: "hidden",
         flex: 1,
         backgroundColor: "#f6f9ff",
-        width: "100%"
+        width: "100%",
+        height: "100%"
     },
 });
