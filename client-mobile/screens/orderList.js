@@ -1,24 +1,75 @@
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, RefreshControl, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import CardOrderList from "../components/CardOrderList";
+import { useEffect, useState } from "react";
+import { getValueFor } from "../helpers/secureStore";
 
 export default function OrderList() {
+    const [data, setData] = useState([])
+    const [refreshing, setRefreshing] = useState(false); // State for refreshing
+    const [searchText, setSearchText] = useState(''); // State for search input
+
+
+    const dataOrderList = async () => {
+        try {
+            const token = await getValueFor('access_token')
+            if (token) {
+                const response = await fetch('https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/orders/user', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if (response.ok) {
+                    const data = await response.json();
+                    setData(data.data)
+                    setRefreshing(false); // Set refreshing to false after data is fetched
+
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Access token not found.');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        dataOrderList()
+    }, [])
+
+    const handleRefresh = () => {
+        setRefreshing(true); // Set refreshing to true
+        dataOrderList(); // Fetch data
+    };
+
+    const filteredData = data.filter((item) =>
+        item.store.name.toLowerCase().includes(searchText.toLowerCase())
+    );
     return (
         <View style={styles.outerContainer}>
-            <ScrollView style={styles.componentParent}>
-                <View style={styles.container}>
-                    <View style={styles.inputContainer}>
-                        <Image source={require('../assets/icons/search.png')} style={styles.icon} />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Search Order .."
-                        />
+            <FlatList
+                style={styles.componentParent}
+                data={filteredData}
+                keyExtractor={(item) => item._id.toString()} // Change to your unique key property
+                renderItem={({ item }) => <CardOrderList data={item} />}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                }
+                ListHeaderComponent={
+                    <View style={styles.container}>
+                        <View style={styles.inputContainer}>
+                            <Image source={require('../assets/icons/search.png')} style={styles.icon} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Search Store Name .."
+                                value={searchText}
+                                onChangeText={(text) => setSearchText(text)}
+                            />
+                        </View>
                     </View>
-                </View>
-                <CardOrderList />
-                <CardOrderList />
-                <CardOrderList />
-                <CardOrderList />
-            </ScrollView>
+                }
+            />
         </View>
     )
 }

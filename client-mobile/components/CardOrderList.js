@@ -1,18 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { formatPriceToIDR } from "../helpers/formatter";
 
-export default function CardOrderList() {
+export default function CardOrderList({ data }) {
     const navigation = useNavigation()
     return (
 
         <TouchableOpacity onPress={() => {
-            navigation.navigate('DetailOrder')
+            navigation.navigate('DetailOrder', { data: data })
         }}>
             <View style={styles.frameParent}>
                 <View style={styles.instanceWrapper}>
                     <View style={styles.orderNumberParent}>
                         <Text style={styles.orderNumberTitle}>Order Number</Text>
-                        <Text style={styles.orderNumberText}>ON-98765434338</Text>
+                        <Text style={styles.orderNumberText}>{data._id.toUpperCase()}</Text>
                     </View>
                 </View>
                 <View style={styles.frameGroup}>
@@ -20,7 +21,7 @@ export default function CardOrderList() {
                         <Text style={styles.contentTitle}>Store Name</Text>
                         <View style={styles.parentMainContent}>
                             <Image style={styles.iconLayout} source={require('../assets/icons/location.png')} />
-                            <Text style={styles.mainContent}>Toko Pak Ganjar</Text>
+                            <Text style={styles.mainContent}>{data.store.name}</Text>
                         </View>
                     </View>
                     <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
@@ -28,15 +29,18 @@ export default function CardOrderList() {
                         <Text style={styles.contentTitle}>Total Billed</Text>
                         <View style={styles.parentMainContent}>
                             <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
-                            <Text style={styles.mainContent}>Rp 2.000.000</Text>
+                            <Text style={styles.mainContent}>{formatPriceToIDR(data.totalBill)}</Text>
                         </View>
                         <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
                     </View>
                     <View style={styles.storeNameParent}>
                         <Text style={styles.contentTitle}>Status</Text>
-                        <View style={styles.parentMainContent}>
-                            <Text style={styles.confirmStatus}>Confirmed</Text>
-                        </View>
+                        <Text style={[
+                            styles.confirmStatus,
+                            data.status === 'pending' && styles.pendingStatus
+                        ]}>
+                            {data.status}
+                        </Text>
                     </View>
                 </View>
             </View >
@@ -106,6 +110,14 @@ const styles = StyleSheet.create({
     },
     confirmStatus: {
         color: "#00B407",
+        marginLeft: 4,
+        lineHeight: 20,
+        textAlign: "left",
+        fontSize: 12,
+        fontFamily: "Mulish-Bold"
+    },
+    pendingStatus: {
+        color: "orange",
         marginLeft: 4,
         lineHeight: 20,
         textAlign: "left",

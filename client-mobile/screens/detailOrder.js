@@ -1,8 +1,11 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import CardDetailOrderProducts from "../components/CardDetailOrderProducts";
 import CardDetailOrderBilled from "../components/CardDetailOrderBilled";
+import { formatDate } from "../helpers/formatter";
 
-export default function DetailOrder() {
+export default function DetailOrder({ route }) {
+    const data = route.params
+    console.log(data, '<<<<');
     return (
         <View style={styles.outerContainer}>
             <ScrollView style={styles.componentParent}>
@@ -12,7 +15,7 @@ export default function DetailOrder() {
                         <View style={styles.orderNumberParent}>
                             <Text style={[styles.orderNumber, styles.contentText]}>Order Number</Text>
                             <View style={styles.mainContentParent}>
-                                <Text style={styles.mainContentText}>ON-98765434338</Text>
+                                <Text style={styles.mainContentText}>{data.data._id.toUpperCase()}</Text>
                             </View>
                         </View>
                         <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
@@ -20,33 +23,40 @@ export default function DetailOrder() {
                             <Text style={[styles.orderNumber, styles.contentText]}>Store Name</Text>
                             <View style={styles.mainContentParent}>
                                 <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/location.png')} />
-                                <Text style={[styles.tokoPakBudi, styles.mainContentText]}>Toko Pak Budi</Text>
+                                <Text style={[styles.tokoPakBudi, styles.mainContentText]}>{data.data.store.name}</Text>
                             </View>
                         </View>
                         <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
                         <View style={styles.parentSpaceBlock}>
                             <Text style={[styles.orderNumber, styles.contentText]}>Created Order</Text>
                             <View style={styles.mainContentParent}>
-                                <Text style={styles.mainContentText}>01 Januari 2023</Text>
+                                <Text style={styles.mainContentText}>{formatDate(data.data.createdAt)}</Text>
                             </View>
                         </View>
                         <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
                         <View style={styles.parentSpaceBlock}>
                             <Text style={[styles.orderNumber, styles.contentText]}>Status Order</Text>
                             <View style={styles.mainContentParent}>
-                                <Text style={[styles.completedText, styles.textTypo]}>Completed</Text>
+                                <Text style={[
+                                    styles.completedText, styles.textTypo,
+                                    data.data.status === 'pending' && styles.pendingStatus, styles.textTypo
+                                ]}>
+                                    {data.data.status}
+                                </Text>
                             </View>
                         </View>
                     </View>
                 </View>
                 <View style={styles.labelParent}>
+
                     <Text style={styles.label}>Products</Text>
-                    <CardDetailOrderProducts />
-                    <CardDetailOrderProducts />
+                    {data.data.productOrder.map((product) => (
+                        <CardDetailOrderProducts key={product.productId} product={product} />
+                    ))}
                 </View>
                 <View style={styles.labelParent}>
                     <Text style={styles.label}>Detailed Billed</Text>
-                    <CardDetailOrderBilled />
+                    <CardDetailOrderBilled billed={data.data} />
                 </View>
             </ScrollView>
         </View>
@@ -124,6 +134,9 @@ const styles = StyleSheet.create({
     },
     completedText: {
         color: "#1dcd9f"
+    },
+    pendingStatus: {
+        color: "orange"
     },
     frameParent: {
         backgroundColor: "#fff",

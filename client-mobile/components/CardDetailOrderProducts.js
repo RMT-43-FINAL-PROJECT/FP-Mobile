@@ -1,6 +1,8 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import { formatPriceToIDR } from "../helpers/formatter";
 
-export default function CardDetailOrderProducts() {
+export default function CardDetailOrderProducts({ product }) {
+    const totalPrice = formatPriceToIDR(product.qtySold * product.price)
     return (
         <View style={styles.frameParent}>
             <View style={styles.labelGroup}>
@@ -9,18 +11,18 @@ export default function CardDetailOrderProducts() {
             </View>
             <View style={styles.frameContainer}>
                 <View style={styles.labelGroup}>
-                    <Text style={[styles.label3, styles.labelClr]}>Indomie Goreng</Text>
-                    <Text style={[styles.label4, styles.labelClr]}>1000 Karton</Text>
+                    <Text style={[styles.label3, styles.labelClr]}>{product.name}</Text>
+                    <Text style={[styles.label4, styles.labelClr]}>{product.qtySold} pcs</Text>
                 </View>
                 <View style={styles.labelWrapper}>
-                    <Text style={[styles.label5, styles.labelClr]}>1000 x Rp 1.000.000</Text>
+                    <Text style={[styles.label5, styles.labelClr]}>{product.qtySold} x {formatPriceToIDR(product.price)}</Text>
                 </View>
             </View>
             <Image style={[styles.separatorsIcon, styles.separatorsIconSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
             <View style={[styles.instanceParent, styles.separatorsIconSpaceBlock]}>
                 <View style={styles.totalPriceParent}>
                     <Text style={[styles.totalPrice, styles.label1]}>Total Price</Text>
-                    <Text style={[styles.text, styles.labelClr]}>Rp 100.000.000</Text>
+                    <Text style={[styles.text, styles.labelClr]}>{totalPrice}</Text>
                 </View>
                 <View style={styles.frameChild} />
             </View>
