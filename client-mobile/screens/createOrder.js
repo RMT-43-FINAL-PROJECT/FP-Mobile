@@ -1,15 +1,115 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Dimensions, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { Picker } from '@react-native-picker/picker';
-
+import { getValueFor } from "../helpers/secureStore"
+import axios from 'axios'
+import { formatPriceToIDR } from "../helpers/formatter";
 export default function CreateOrder() {
-    const [productName, setProductName] = useState('');
-    const [price, setPrice] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [storeName, setStoreName] = useState('');
     const [isProductNameVisible, setIsProductNameVisible] = useState(false);
     const [isPriceVisible, setIsPriceVisible] = useState(false);
     const [isStoreNameVisible, setIsStoreNameVisible] = useState(false);
+
+    let [selectedProductName, setSelectedProductName] = useState('Select Product')
+    let [selectedStoreName, setSelectedStoreName] = useState('Select Store')
+    let [productSelectInput, setProductSelectInput] = useState([])
+    let [storeSelect, setStoreSelect] = useState([])
+    let [productId, setProductId] = useState(null);
+    let [storeId, setStoreId] = useState(null);
+    let [quantity, setQuantity] = useState(null);
+    let [price, setPrice] = useState(null);
+    let [discQty, setDiscQty] = useState(null);
+    let [finalPrice, setFinalPrice] = useState(null)
+
+    async function getNameProduct() {
+        const token = await getValueFor('access_token')
+        try {
+            let link = `${process.env.EXPO_PUBLIC_API_URL}/products/?available=true`
+            let { data } = await axios({
+                method: 'get',
+                url: link,
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+            setProductSelectInput(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function getNameStore() {
+        const token = await getValueFor('access_token')
+        try {
+            let link = `${process.env.EXPO_PUBLIC_API_URL}/stores/simple`
+            let { data } = await axios({
+                method: 'get',
+                url: link,
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+            setStoreSelect(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function submitHandle() {
+        let rawData = {
+            storeId: storeId,
+            productOrder: []
+        }
+        let product = {
+            productId: productId,
+            qtySold: quantity,
+            price: finalPrice,
+        }
+        rawData.productOrder.push(product)
+        console.log(rawData, '<<<<< UDAH SIAP POST. KALO MAU TAMBAH PRODUCT TINGGAL PUSH.... RENCANA : NAMBAH? PENCET -> KOSONGIN SEMUANYA KE SEMULA -> SUBMIT -> PUSH -> REPEAT')
+    }
+
+    function totalPrice() {
+        let totalPrice
+        if (quantity && price) {
+            const selectedProduct = productSelectInput.find(product => product._id === productId);
+            if (selectedProduct) {
+                if (quantity < selectedProduct.discQty) {
+                    totalPrice = price * quantity;
+                } else {
+                    totalPrice = price * quantity * ((100 - selectedProduct.discPercent) / 100);
+                }
+            }
+        }
+        return totalPrice || 0
+    }
+
+    // useEffect(() => {
+    //     totalPrice()
+    // }, [quantity])
+
+    useEffect(() => {
+        totalPrice()
+        setFinalPrice(totalPrice());
+    }, [quantity, price, productId])
+
+    useEffect(() => {
+        getNameStore()
+        getNameProduct()
+    }, [])
+
+    useEffect(() => {
+        if (productSelectInput) {
+            let getProduct = productSelectInput.find(product => {
+                if (product._id === productId) {
+                    return product
+                }
+            })
+            if (getProduct) {
+                setDiscQty(getProduct.discQty)
+                setPrice(getProduct.price)
+            }
+        }
+    }, [productId])
 
     const togglePicker = (pickerName) => {
         switch (pickerName) {
@@ -36,123 +136,11 @@ export default function CreateOrder() {
         <View style={styles.outerContainer}>
             <View style={styles.componentParent}>
                 <View style={styles.container}>
-                    <Text style={styles.label}>Product Name</Text>
-                    <TouchableWithoutFeedback onPress={() => togglePicker('productName')}>
-                        <View style={styles.pickerContainer}>
-                            <Text style={styles.pickerText}>{productName || 'Select Product'}</Text>
-                            <View style={styles.iconLayoutParent}>
-                                <Image source={require('../assets/icons/arrowdown.png')} style={styles.iconLayout} />
-                            </View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <Modal visible={isProductNameVisible} animationType="slide" transparent={true}>
-                        <View style={styles.closeModalContainer}>
-                            <TouchableOpacity onPress={() => setIsProductNameVisible(false)} >
-                                <Image source={require('../assets/icons/closemodal.png')} style={styles.closeModalIcon} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.modalContainer}>
-                            <Picker
-                                selectedValue={productName}
-                                onValueChange={(itemValue) => {
-                                    setProductName(itemValue);
-                                    setIsProductNameVisible(false);
-                                }}
-
-                                style={styles.picker}
-                            >
-                                <Picker.Item
-                                    label="Product A"
-                                    value="Product A"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Product B"
-                                    value="Product B"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Product C"
-                                    value="Product C"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Product C"
-                                    value="Product C"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Product C"
-                                    value="Product C"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Product C"
-                                    value="Product C"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Product C"
-                                    value="Product C"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Product C"
-                                    value="Product C"
-                                    onPress={() => setIsProductNameVisible(false)}
-                                />
-                            </Picker>
-                        </View>
-
-                    </Modal>
-
-                    <Text style={styles.label}>Price</Text>
-                    <TouchableWithoutFeedback onPress={() => togglePicker('price')}>
-                        <View style={styles.pickerContainer}>
-                            <Text style={styles.pickerText}>{price || 'Select Price'}</Text>
-                            <View style={styles.iconLayoutParent}>
-                                <Image source={require('../assets/icons/arrowdown.png')} style={styles.iconLayout} />
-                            </View>
-                        </View>
-                    </TouchableWithoutFeedback>
-                    <Modal visible={isPriceVisible} animationType="slide" transparent={true}>
-                        <View style={styles.closeModalContainer}>
-                            <TouchableOpacity onPress={() => setIsPriceVisible(false)} >
-                                <Image source={require('../assets/icons/closemodal.png')} style={styles.closeModalIcon} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.modalContainer}>
-                            <Picker
-                                selectedValue={price}
-                                onValueChange={(itemValue) => {
-                                    setPrice(itemValue);
-                                    setIsPriceVisible(false);
-                                }}
-                                style={styles.picker}
-                            >
-                                <Picker.Item
-                                    label="$10"
-                                    value="10"
-                                    onPress={() => setIsPriceVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="$20"
-                                    value="20"
-                                    onPress={() => setIsPriceVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="$30"
-                                    value="30"
-                                    onPress={() => setIsPriceVisible(false)}
-                                />
-                            </Picker>
-                        </View>
-                    </Modal>
 
                     <Text style={styles.label}>Store Name</Text>
                     <TouchableWithoutFeedback onPress={() => togglePicker('storeName')}>
                         <View style={styles.pickerContainer}>
-                            <Text style={styles.pickerText}>{storeName || 'Select Store Name'}</Text>
+                            <Text style={styles.pickerText}>{selectedStoreName}</Text>
                             <View style={styles.iconLayoutParent}>
                                 <Image source={require('../assets/icons/arrowdown.png')} style={styles.iconLayout} />
                             </View>
@@ -166,52 +154,106 @@ export default function CreateOrder() {
                         </View>
                         <View style={styles.modalContainer}>
                             <Picker
-                                selectedValue={price}
-                                onValueChange={(itemValue) => {
-                                    setStoreName(itemValue);
+                                // selectedValue={price}
+                                onValueChange={(itemValue, index) => {
+                                    setStoreId(itemValue);
+                                    setSelectedStoreName(storeSelect[index]?.name)
                                     setIsStoreNameVisible(false);
                                 }}
                                 style={styles.picker}
                             >
-                                <Picker.Item
-                                    label="Toko Anies Bondan"
-                                    value="Anies"
-                                    onPress={() => setIsStoreNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Toko Prabowo Sigit"
-                                    value="Prabowo"
-                                    onPress={() => setIsStoreNameVisible(false)}
-                                />
-                                <Picker.Item
-                                    label="Toko Ganjar Purnama"
-                                    value="Ganjar"
-                                    onPress={() => setIsStoreNameVisible(false)}
-                                />
+                                {storeSelect.map((store, i) => (
+                                    <Picker.Item
+                                        label={store.name}
+                                        value={store._id}
+                                        key={i} // dont keyExtra
+                                    />
+                                ))}
                             </Picker>
                         </View>
                     </Modal>
 
-                    <Text style={styles.label}>Price</Text>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.inputText}
-                            placeholder={price || `automatically adjust price`}
-                            // value={quantity >= discQty ? price * (1 - discPercent) : price}
-                            value={price}
-                            editable={false}
-                        />
-                    </View>
-                    <Text style={styles.label}>Quantity</Text>
+                    <Text style={styles.label}>Product Name</Text>
+                    <TouchableWithoutFeedback onPress={() => togglePicker('productName')}>
+                        <View style={styles.pickerContainer}>
+                            <Text style={styles.pickerText}>{selectedProductName}</Text>
+                            <View style={styles.iconLayoutParent}>
+                                <Image source={require('../assets/icons/arrowdown.png')} style={styles.iconLayout} />
+                            </View>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <Modal visible={isProductNameVisible} animationType="slide" transparent={true}>
+                        <View style={styles.closeModalContainer}>
+                            <TouchableOpacity onPress={() => setIsProductNameVisible(false)} >
+                                <Image source={require('../assets/icons/closemodal.png')} style={styles.closeModalIcon} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.modalContainer}>
+                            <Picker
+                                // selectedValue={productId}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setProductId(itemValue);
+                                    setSelectedProductName(productSelectInput[itemIndex]?.name)
+                                    setIsProductNameVisible(false);
+                                }}
+                                style={styles.picker}
+                            >
+                                {productSelectInput.map((product, i) => (
+                                    <Picker.Item
+                                        label={product.name}
+                                        value={product._id}
+                                        key={i} // dont keyExtra
+                                    />
+                                ))}
+                            </Picker>
+                        </View>
+                    </Modal>
+
+                    <Text style={styles.label}>Quantity (Discount Quantity : {discQty ? discQty : 0})</Text>
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={styles.inputText}
                             placeholder="Ex: 1000 Karton"
                             keyboardType="numeric"
-                            value={quantity}
+                            onChangeText={setQuantity}
                         />
                     </View>
-                    <TouchableOpacity>
+
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: `6%`,
+                        marginTop: '2%'
+                    }}>
+                        <Text style={{
+                            fontSize: 14,
+                            lineHeight: 24,
+                            color: "#1b5fe3",
+                        }}>Price per Product :</Text>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            color: "#1b5fe3",
+                        }}>{price ? formatPriceToIDR(price) : formatPriceToIDR(0)}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: `6%`,
+                        marginBottom: '6%%',
+                        marginTop: '2%'
+                    }}>
+                        <Text style={{
+                            fontSize: 14,
+                            lineHeight: 24,
+                            color: "#1b5fe3",
+                        }}>Total Price :</Text>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            color: "#1b5fe3",
+                        }}>{formatPriceToIDR(finalPrice || 0)}</Text>
+                    </View>
+
+                    <TouchableOpacity onPress={submitHandle}>
                         <View style={styles.buttonContainer}>
                             <Text style={styles.buttonSubmitText}>Submit</Text>
                         </View>
@@ -262,6 +304,15 @@ const styles = StyleSheet.create({
         height: 20,
         width: 20
     },
+    inputContainerPrice: {
+        backgroundColor: "#fff",
+        borderColor: '#e8e8e8',
+        borderRadius: 5,
+        marginBottom: 16,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: 'space-between',
+    },
     inputContainer: {
         backgroundColor: "#fff",
         borderColor: '#e8e8e8',
@@ -275,8 +326,8 @@ const styles = StyleSheet.create({
             height: 2,
         },
         shadowRadius: 2,
-        elevation: 2,
         shadowOpacity: 1,
+        elevation: 2,
         justifyContent: 'space-between',
     },
     inputText: {
