@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
   headerTitleContainerLeft: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "red",
     width: 155
   },
   rectangleParent: {
