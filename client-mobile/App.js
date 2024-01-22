@@ -4,6 +4,7 @@ import Login from "./screens/login";
 import OrderList from "./screens/storeList";
 import * as Font from 'expo-font';
 import { useEffect, useState } from "react";
+import AuthProvider from "./context/AuthContext";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -23,14 +24,18 @@ export default function App() {
 
   if (!fontLoaded) {
     return (
-      <SafeAreaProvider>
-        <MainNavigation />
-      </SafeAreaProvider>
+      <AuthProvider>
+        <SafeAreaProvider>
+          <MainNavigation />
+        </SafeAreaProvider>
+      </AuthProvider>
     );
   }
   return (
-    <SafeAreaProvider>
-      <MainNavigation />
-    </SafeAreaProvider>
+    <AuthProvider>
+      <SafeAreaProvider>
+        <MainNavigation />
+      </SafeAreaProvider>
+    </AuthProvider>
   );
 }

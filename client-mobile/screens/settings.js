@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { deleteStore } from "../helpers/secureStore";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Settings() {
+    const authContext = useContext(AuthContext)
+
     const [isExpanded, setIsExpanded] = useState(false);
 
     const handleArrowPress = () => {
@@ -82,7 +86,10 @@ export default function Settings() {
                     </View>
                 </TouchableOpacity>
                 <Image style={[styles.separatorsIcon, styles.artikelCardSpaceBlock]} contentMode="cover" source={require('../assets/icons/separators.png')} />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    deleteStore('access_token')
+                    authContext.setIsSignedIn(false)
+                }}>
                     <View style={[styles.artikelCard, styles.artikelCardSpaceBlock]}>
                         <Image style={styles.arrowUpSLineIcon} contentMode="cover" source={require('../assets/icons/logout.png')} />
                         <Text style={[styles.termsOfService, styles.termsOfServiceFlexBox]}>Log out</Text>
