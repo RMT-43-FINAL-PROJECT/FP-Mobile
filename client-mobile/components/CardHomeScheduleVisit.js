@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { formatDate, formatTimestampToDateString, formatTimestampToTimeString } from "../helpers/formatter";
 
 export default function CardHomeScheduleVisit({ data }) {
-    console.log(data, "ini data <<<<<<<< dari cardhomesched");
     const navigation = useNavigation()
     return (
         <>

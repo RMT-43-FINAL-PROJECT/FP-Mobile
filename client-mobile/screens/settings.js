@@ -3,12 +3,13 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import { deleteStore } from "../helpers/secureStore";
 import { AuthContext } from "../context/AuthContext";
 import { formatDate } from "../helpers/formatter";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Settings({ route }) {
     const data = route.params
     console.log(data, "<<<<");
     const authContext = useContext(AuthContext)
-
+    const navigation = useNavigation()
     const [isExpanded, setIsExpanded] = useState(false);
 
     const handleArrowPress = () => {
@@ -58,11 +59,15 @@ export default function Settings({ route }) {
                                     <Text style={styles.label1}>{data.data.address}</Text>
                                 </View>
                             </View>
-                            <View style={[styles.buttonBasicWrapper, styles.textFieldSpaceBlock]}>
-                                <View style={[styles.buttonBasic, styles.frameParentFlexBox]}>
-                                    <Text style={[styles.label8, styles.labelTypo]}>Update Profile</Text>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('UpdateProfile', { data: data })
+                            }}>
+                                <View style={[styles.buttonBasicWrapper, styles.textFieldSpaceBlock]}>
+                                    <View style={[styles.buttonBasic, styles.frameParentFlexBox]}>
+                                        <Text style={styles.label8}>Update Profile</Text>
+                                    </View>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
 
                         </>
                     )}
@@ -151,7 +156,11 @@ const styles = StyleSheet.create({
         overflow: "hidden"
     },
     label8: {
-        color: "#fff"
+        color: "#fff",
+        fontFamily: "Mulish-Bold",
+        lineHeight: 20,
+        textAlign: "left",
+        fontSize: 12
     },
     buttonBasic: {
         backgroundColor: "#1b5fe3",
