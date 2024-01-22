@@ -1,21 +1,22 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import { formatPriceToIDR } from "../helpers/formatter";
 
-export default function CardDetailOrderBilled() {
+export default function CardDetailOrderBilled({ billed }) {
     return (
         <View style={[styles.frameParent, styles.frameParentFlexBox]}>
             <View style={[styles.labelParent, styles.labelLayout]}>
                 <Text style={[styles.label, styles.labelTypo]}>Total</Text>
-                <Text style={styles.label1}>Rp 125.000.000</Text>
+                <Text style={styles.label1}>{formatPriceToIDR(billed.totalBill)}</Text>
             </View>
             <View style={[styles.labelGroup, styles.labelLayout]}>
                 <Text style={[styles.label, styles.labelTypo]}>Discount</Text>
-                <Text style={styles.label1}>- Rp 5.000.000</Text>
+                <Text style={styles.label1}>- {billed.discount}</Text>
             </View>
             <Image style={[styles.separatorsIcon, styles.separatorsIconSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
             <View style={[styles.instanceParent, styles.separatorsIconSpaceBlock]}>
                 <View style={styles.frameParentFlexBoxTotal}>
                     <Text style={[styles.totalBilled, styles.labelTypo]}>Total Billed</Text>
-                    <Text style={styles.text}>Rp 120.000.000</Text>
+                    <Text style={styles.text}>{formatPriceToIDR(billed.totalBill)}</Text>
                 </View>
             </View>
         </View>

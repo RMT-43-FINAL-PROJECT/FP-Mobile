@@ -1,8 +1,39 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getValueFor } from "../helpers/secureStore";
+import { useEffect, useState } from "react";
 
 export default function CardHomeOverview() {
+    const [counterOrder, setCounterOrder] = useState('')
     const navigation = useNavigation()
+
+    const counterOrderValue = async () => {
+        try {
+            const token = await getValueFor('access_token')
+            if (token) {
+                const response = await fetch('https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/orders/user', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if (response.ok) {
+                    const data = await response.json();
+                    setCounterOrder(data.count)
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Access token not found.');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        counterOrderValue()
+    }, [])
+
     return (
 
         <View style={styles.frameWrapper}>
@@ -38,7 +69,7 @@ export default function CardHomeOverview() {
                         <View style={[styles.groupGray, styles.groupLayout]} />
                         <Text style={[styles.contentTextTitle, styles.contentText]}>Order List</Text>
                         <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
-                        <Text style={[styles.mainContent, styles.contentText]}>30 Orders</Text>
+                        <Text style={[styles.mainContent, styles.contentText]}>{counterOrder} Orders</Text>
                     </TouchableOpacity>
                 </View>
             </View>

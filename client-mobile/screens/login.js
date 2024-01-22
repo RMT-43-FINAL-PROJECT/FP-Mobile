@@ -41,7 +41,7 @@ export default function Login({ navigation }) {
             }
             Alert.alert("Successfully Logged In!");
 
-            navigation.navigate('Home')
+            navigation.navigate('Overview')
         } catch (error) {
             console.error("Error during login:", error);
             Alert.alert("Failed to login", "An error occurred while attempting to log in.");
