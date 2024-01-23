@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { formatPriceToIDR } from "../helpers/formatter";
 
 export default function CardDetailOrderBilled({ billed }) {
+    console.log(billed, '<<<< ini billed');
     return (
         <View style={[styles.frameParent, styles.frameParentFlexBox]}>
             <View style={[styles.labelParent, styles.labelLayout]}>
@@ -10,7 +11,7 @@ export default function CardDetailOrderBilled({ billed }) {
             </View>
             <View style={[styles.labelGroup, styles.labelLayout]}>
                 <Text style={[styles.label, styles.labelTypo]}>Discount</Text>
-                <Text style={styles.label1}>- {billed.discountValue}</Text>
+                <Text style={styles.label1}>- {formatPriceToIDR(billed.discountValue)}</Text>
             </View>
             <Image style={[styles.separatorsIcon, styles.separatorsIconSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
             <View style={[styles.instanceParent, styles.separatorsIconSpaceBlock]}>

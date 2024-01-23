@@ -56,7 +56,7 @@ export default function UpdateProfile({ route }) {
             formData.append("address", address);
             formData.append("photo", { uri: localUri, name: filename, type });
             const response = await fetch(
-                `https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/users/${userId}`,
+                `${process.env.EXPO_PUBLIC_API_URL}/users/${userId}`,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",

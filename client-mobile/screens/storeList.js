@@ -9,7 +9,7 @@ export default function StoreList({ navigation }) {
 
     const fetchStoreData = async () => {
         try {
-            const response = await fetch(`https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/stores/mobile?search=${searchQuery}`, {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/stores/mobile?search=${searchQuery}`, {
                 method: 'GET'
             });
 
