@@ -6,7 +6,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import ProductList from '../screens/productList';
 import StoreList from '../screens/storeList';
 import OrderList from '../screens/orderList';
-import Home from '../screens/home';
 import DetailVisit from '../screens/detailVisit';
 import MonthlySales from '../screens/monthlySales';
 import Settings from '../screens/settings';

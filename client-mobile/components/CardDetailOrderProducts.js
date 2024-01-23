@@ -2,7 +2,6 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { formatPriceToIDR } from "../helpers/formatter";
 
 export default function CardDetailOrderProducts({ product }) {
-    console.log();
     return (
         <View style={styles.frameParent}>
             <View style={styles.labelGroup}>
@@ -15,7 +14,7 @@ export default function CardDetailOrderProducts({ product }) {
                     <Text style={[styles.label4, styles.labelClr]}>{product.qtySold} pcs</Text>
                 </View>
                 <View style={styles.labelWrapper}>
-                    <Text style={[styles.label5, styles.labelClr]}>{product.qtySold} x {formatPriceToIDR(product.price)}</Text>
+                    <Text style={[styles.label5, styles.labelClr]}>{product.qtySold} x {formatPriceToIDR(product.finalPrice)}</Text>
                 </View>
             </View>
             <Image style={[styles.separatorsIcon, styles.separatorsIconSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />

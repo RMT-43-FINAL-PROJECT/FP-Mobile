@@ -6,7 +6,7 @@ import { getValueFor } from "../helpers/secureStore";
 import { useNavigation } from "@react-navigation/native";
 
 export default function DetailVisit({ route }) {
-    const data = route.params
+    const { data } = route.params
     const navigation = useNavigation()
     const openGoogleMaps = (latitude, longitude) => {
         const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
@@ -15,7 +15,7 @@ export default function DetailVisit({ route }) {
     };
 
     const handleCallPress = () => {
-        const phoneUrl = `tel:${data.data.storeInformations.mobilePhone}`;
+        const phoneUrl = `tel:${data.storeInformations.mobilePhone}`;
 
         Linking.canOpenURL(phoneUrl).then((supported) => {
             if (supported) {
@@ -62,7 +62,7 @@ export default function DetailVisit({ route }) {
                 longitude,
                 latitude
             }
-            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/schedules/status/${data.data._id}`, {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/schedules/status/${data._id}`, {
                 headers: {
                     'Content-Type': "application/json",
                     Authorization: `Bearer ${token}`
@@ -93,25 +93,25 @@ export default function DetailVisit({ route }) {
             <View style={styles.contentParent}>
                 <View style={styles.contentFrame}>
                     <View style={styles.contentTitleParent}>
-                        <Text style={styles.contentHeaderTitle}>{data.data.storeInformations.name}</Text>
+                        <Text style={styles.contentHeaderTitle}>{data.storeInformations.name}</Text>
                         <View style={styles.statusParent}>
-                            <Text style={[data.data.isCompleted ? styles.status : styles.pending]}>
-                                {data.data.isCompleted ? 'Completed' : 'Pending'}
+                            <Text style={[data.isCompleted ? styles.status : styles.pending]}>
+                                {data.isCompleted ? 'Completed' : 'Pending'}
                             </Text>
                         </View>
                     </View>
                     <Image style={styles.separatorsIcon} resizeMode="cover" source={require('../assets/icons/separators.png')} />
                     <View style={[styles.subContentFrame, styles.ParentFlexBox]}>
                         <Text style={styles.contentLeft}>Date</Text>
-                        <Text style={styles.contentRight}>{formatTimestampToDateString(data.data.time)}</Text>
+                        <Text style={styles.contentRight}>{formatTimestampToDateString(data.time)}</Text>
                     </View>
                     <View style={[styles.subContentFrame, styles.ParentFlexBox]}>
                         <Text style={styles.contentLeft}>Time</Text>
-                        <Text style={styles.contentRight}>{formatTimestampToTimeString(data.data.time)}</Text>
+                        <Text style={styles.contentRight}>{formatTimestampToTimeString(data.time)}</Text>
                     </View>
                     <View style={[styles.subContentFrame, styles.ParentFlexBox]}>
                         <Text style={styles.contentLeft}>Address</Text>
-                        <Text style={styles.contentRightAddress}>{data.data.storeInformations.address}</Text>
+                        <Text style={styles.contentRightAddress}>{data.storeInformations.address}</Text>
                     </View>
                     <Image style={styles.separatorsIcon} resizeMode="cover" source={require('../assets/icons/separators.png')} />
                     <View style={styles.ParentFlexBox}>
@@ -123,8 +123,8 @@ export default function DetailVisit({ route }) {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => {
                             openGoogleMaps(
-                                data.data.storeInformations.location.coordinates[1],
-                                data.data.storeInformations.location.coordinates[0]
+                                data.storeInformations.location.coordinates[1],
+                                data.storeInformations.location.coordinates[0]
                             );
                         }}>
                             <View style={[styles.directionLineParent, styles.iconParent]}>

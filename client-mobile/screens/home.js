@@ -89,13 +89,13 @@ export default function Home({ navigation }) {
                         <Image style={styles.notifIconPosition} resizeMode="cover" source={{ uri: data.photo }} />
                         <Text style={styles.salesNameText}>{data.name}</Text>
                         <View style={styles.headerIconContainer}>
-                            <View style={styles.iconsParent}>
+                            {/* <View style={styles.iconsParent}>
                                 <Image style={styles.notifIconLayout} resizeMode="cover" source={require('../assets/icons/notif.png')} />
                                 <View style={styles.counterLayout}>
                                     <Image style={styles.circleCounter} resizeMode="cover" source={require('../assets/icons/counter.png')} />
                                     <Text style={styles.counterText}>1</Text>
                                 </View>
-                            </View>
+                            </View> */}
                             <TouchableOpacity onPress={() => navigation.navigate('Settings', { data: data })}>
                                 <Image style={styles.settingsLineIcon} resizeMode="cover" source={require('../assets/icons/settings.png')} />
                             </TouchableOpacity>
