@@ -1,11 +1,14 @@
 import { FlatList, Image, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import CardHomeOverview from "../components/CardHomeOverview";
 import CardHomeScheduleVisit from "../components/CardHomeScheduleVisit";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getValueFor } from "../helpers/secureStore";
+import { UserContext } from "../context/UserContext";
+
 
 export default function Home({ navigation }) {
     const [data, setData] = useState([])
+    const userContext = useContext(UserContext)
 
     const dataUser = async () => {
         try {
@@ -20,12 +23,15 @@ export default function Home({ navigation }) {
                 if (response.ok) {
                     const data = await response.json();
                     setData(data)
+                    userContext.setUserData(data)
 
                 } else {
                     console.error('Request failed with status:', response.status);
                 }
+
+
             } else {
-                console.error('Access token not found.');
+                console.error('Access tokenr not found.');
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -33,6 +39,7 @@ export default function Home({ navigation }) {
     }
 
     useEffect(() => {
+        // console.log(userData);
         dataUser()
     }, [])
 
