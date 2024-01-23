@@ -5,7 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { getValueFor } from "../helpers/secureStore";
 
-export default function CreateStore() {
+export default function CreateStore({ navigation }) {
     const [name, setName] = useState("toko ani");
     const [address, setAddress] = useState("jl abcd");
     const [ownerName, setOwnerName] = useState("budi");
@@ -59,7 +59,7 @@ export default function CreateStore() {
             formData.append("latitude", latitude);
             formData.append("photo", { uri: localUri, name: filename, type });
             const response = await fetch(
-                "https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/stores",
+                `${process.env.EXPO_PUBLIC_API_URL}/stores`,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -79,6 +79,7 @@ export default function CreateStore() {
             const data = await response.json();
             console.log(data);
             Alert.alert("Success!", "Created store");
+            navigation.navigate('StoreList')
         } catch (error) {
             console.error("Error:", error);
             Alert.alert("Error", "Failed to create store");

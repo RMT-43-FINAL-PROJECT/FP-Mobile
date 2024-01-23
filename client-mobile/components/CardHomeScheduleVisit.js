@@ -9,7 +9,7 @@ export default function CardHomeScheduleVisit({ data }) {
             <View style={styles.contentContainer}>
                 <TouchableOpacity style={styles.rectangleParent} onPress={() => navigation.navigate('DetailVisit', { data: data })}>
                     <Image style={styles.imageStore} source={{
-                        uri: 'https://down-id.img.susercontent.com/file/aab3c3c3f07f882a66ac88b80439b82a',
+                        uri: data.storeInformations.photo,
                     }} />
                     <View style={styles.mainContentContainer}>
                         <Text style={styles.mainContentTitle}>{data.storeInformations.name}</Text>

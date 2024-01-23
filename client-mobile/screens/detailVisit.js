@@ -62,7 +62,7 @@ export default function DetailVisit({ route }) {
                 longitude,
                 latitude
             }
-            const response = await fetch(`https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/schedules/status/${data.data._id}`, {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/schedules/status/${data.data._id}`, {
                 headers: {
                     'Content-Type': "application/json",
                     Authorization: `Bearer ${token}`
