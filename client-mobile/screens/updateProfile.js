@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import * as ImagePicker from 'expo-image-picker';
 import { getValueFor } from "../helpers/secureStore";
+import { UserContext } from "../context/UserContext";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function UpdateProfile({ route }) {
-    const { data } = route.params
-    // console.log(data.data.data._id, "<<< settings");
+    const userContext = useContext(UserContext)
+    const dataUser = userContext.userData
+    const navigation = useNavigation()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobilePhone, setMobilePhone] = useState('')
@@ -42,7 +45,6 @@ export default function UpdateProfile({ route }) {
 
 
     const handleFormSubmit = async () => {
-        const userId = data.data._id
         try {
             const token = await getValueFor('access_token')
             let localUri = photo;
@@ -56,7 +58,7 @@ export default function UpdateProfile({ route }) {
             formData.append("address", address);
             formData.append("photo", { uri: localUri, name: filename, type });
             const response = await fetch(
-                `${process.env.EXPO_PUBLIC_API_URL}/users/${userId}`,
+                `${process.env.EXPO_PUBLIC_API_URL}/users/${dataUser._id}`,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -76,6 +78,8 @@ export default function UpdateProfile({ route }) {
             const result = await response.json();
             console.log(result);
             Alert.alert("Success!", "Updated your profile");
+
+            navigation.navigate('Settings')
         } catch (error) {
             console.error("Error:", error);
             Alert.alert("Error", "Failed to update your profile");
