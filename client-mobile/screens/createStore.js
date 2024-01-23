@@ -5,7 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { getValueFor } from "../helpers/secureStore";
 
-export default function CreateStore() {
+export default function CreateStore({ navigation }) {
     const [name, setName] = useState("toko ani");
     const [address, setAddress] = useState("jl abcd");
     const [ownerName, setOwnerName] = useState("budi");
@@ -79,6 +79,7 @@ export default function CreateStore() {
             const data = await response.json();
             console.log(data);
             Alert.alert("Success!", "Created store");
+            navigation.navigate('StoreList')
         } catch (error) {
             console.error("Error:", error);
             Alert.alert("Error", "Failed to create store");
