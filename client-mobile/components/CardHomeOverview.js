@@ -2,16 +2,21 @@ import { useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { getValueFor } from "../helpers/secureStore";
 import { useEffect, useState } from "react";
+import { formatPriceToIDR } from "../helpers/formatter";
 
 export default function CardHomeOverview() {
     const [counterOrder, setCounterOrder] = useState('')
+    const [counterStore, setCounterStore] = useState('')
+    const [counterProduct, setCounterProduct] = useState('')
+    const [dataRevenue, setDataRevenue] = useState('')
     const navigation = useNavigation()
 
     const counterOrderValue = async () => {
         try {
             const token = await getValueFor('access_token')
             if (token) {
-                const response = await fetch('https://036e-2001-448a-10b0-3db1-5032-3503-3f18-bfb6.ngrok-free.app/orders/user', {
+                const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/orders/user`, {
+                    method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -30,9 +35,78 @@ export default function CardHomeOverview() {
         }
     }
 
+    const counterStoreValue = async () => {
+        try {
+
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/stores/mobile`, {
+                method: 'GET'
+            })
+            if (response.ok) {
+                const result = await response.json();
+                setCounterStore(result.length)
+            } else {
+                console.error('Request failed with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+    const counterProductValue = async () => {
+        try {
+            const token = await getValueFor('access_token')
+            if (token) {
+                const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/products`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if (response.ok) {
+                    const result = await response.json();
+                    setCounterProduct(result.length)
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Request failed with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    const fetchDataSalesRevenue = async () => {
+        try {
+            const token = await getValueFor('access_token')
+            if (token) {
+                const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/orders/monthly/user`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(result, "<<<<");
+                    setDataRevenue(result)
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Request failed with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     useEffect(() => {
+        fetchDataSalesRevenue()
+        counterProductValue()
+        counterStoreValue()
         counterOrderValue()
     }, [])
+
 
     return (
 
@@ -41,9 +115,9 @@ export default function CardHomeOverview() {
                 <View style={styles.rectangleLayout}>
                     <TouchableOpacity onPress={() => navigation.navigate('MonthlySales')}>
                         <View style={[styles.groupBlue, styles.groupLayout]} />
-                        <Text style={[styles.contentTextTitle, styles.contentText]}>Monthly sales</Text>
-                        <Text style={[styles.mainContent, styles.contentText]}>Rp 100.000.000</Text>
                         <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
+                        <Text style={[styles.contentTextTitle, styles.contentText]}>Monthly sales</Text>
+                        <Text style={[styles.mainContent, styles.contentText]}>{formatPriceToIDR(dataRevenue?.[2024]?.[1]?.totalConfirmedValue)}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.rectangleGroup, styles.rectangleLayout]}>
@@ -51,7 +125,7 @@ export default function CardHomeOverview() {
                         <View style={[styles.groupGreen, styles.groupLayout]} />
                         <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
                         <Text style={[styles.contentTextTitle, styles.contentText]}>Store List</Text>
-                        <Text style={[styles.mainContent, styles.contentText]}>100 Stores</Text>
+                        <Text style={[styles.mainContent, styles.contentText]}>{counterStore} Stores</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -61,7 +135,7 @@ export default function CardHomeOverview() {
                         <View style={[styles.groupYellow, styles.groupLayout]} />
                         <Image style={styles.iconArrow} contentMode="cover" source={require('../assets/icons/toprightarrow.png')} />
                         <Text style={[styles.contentTextTitle, styles.contentText]}>Product List</Text>
-                        <Text style={[styles.mainContent, styles.contentText]}>1000 Products</Text>
+                        <Text style={[styles.mainContent, styles.contentText]}>{counterProduct} Products</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.rectangleGroup, styles.rectangleLayout]}>

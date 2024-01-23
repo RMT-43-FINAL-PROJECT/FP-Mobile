@@ -5,7 +5,7 @@ import { getValueFor } from "../helpers/secureStore";
 
 
 export default function UpdateProfile({ route }) {
-    const data = route.params
+    const { data } = route.params
     // console.log(data.data.data._id, "<<< settings");
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -42,7 +42,7 @@ export default function UpdateProfile({ route }) {
 
 
     const handleFormSubmit = async () => {
-        const userId = data.data.data._id
+        const userId = data.data._id
         try {
             const token = await getValueFor('access_token')
             let localUri = photo;

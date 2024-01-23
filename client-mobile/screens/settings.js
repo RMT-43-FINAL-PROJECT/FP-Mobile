@@ -6,8 +6,7 @@ import { formatDate } from "../helpers/formatter";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Settings({ route }) {
-    const data = route.params
-    console.log(data, "<<<<");
+    const { data } = route.params
     const authContext = useContext(AuthContext)
     const navigation = useNavigation()
     const [isExpanded, setIsExpanded] = useState(false);
@@ -22,10 +21,10 @@ export default function Settings({ route }) {
                 <View style={styles.frameWrapper}>
                     <View style={styles.frameGroup}>
                         <View style={styles.frameContainer}>
-                            <Image style={styles.profilePicture} contentMode="cover" source={{ uri: data.data.photo }} />
+                            <Image style={styles.profilePicture} contentMode="cover" source={{ uri: data.photo }} />
 
                             <View style={styles.userNameWrapper}>
-                                <Text style={styles.userName}>{data.data.name}</Text>
+                                <Text style={styles.userName}>{data.name}</Text>
                             </View>
                         </View>
                         <TouchableOpacity onPress={handleArrowPress}>
@@ -38,25 +37,25 @@ export default function Settings({ route }) {
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Email</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>{data.data.email}</Text>
+                                    <Text style={styles.label1}>{data.email}</Text>
                                 </View>
                             </View>
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Mobile Phone</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>{data.data.mobilePhone}</Text>
+                                    <Text style={styles.label1}>{data.mobilePhone}</Text>
                                 </View>
                             </View>
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Joined Date</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>{formatDate(data.data.joinDate)}</Text>
+                                    <Text style={styles.label1}>{formatDate(data.joinDate)}</Text>
                                 </View>
                             </View>
                             <View style={[styles.textField, styles.textFieldSpaceBlock]}>
                                 <Text style={[styles.label, styles.labelTypo]}>Address</Text>
                                 <View style={[styles.labelinput, styles.labelinputFlexBox]}>
-                                    <Text style={styles.label1}>{data.data.address}</Text>
+                                    <Text style={styles.label1}>{data.address}</Text>
                                 </View>
                             </View>
                             <TouchableOpacity onPress={() => {

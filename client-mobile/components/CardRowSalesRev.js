@@ -8,7 +8,7 @@ export default function CardRowSalesRev() {
                 <Text style={[styles.label4, styles.labelTypo]}>Rp 200.000.000</Text>
             </View>
             <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
-            {/* <View style={[styles.labelContainer, styles.labelFlexBox2]}>
+            <View style={[styles.labelContainer, styles.labelFlexBox2]}>
                 <Text style={[styles.label3, styles.labelTypo]}>February</Text>
                 <Text style={[styles.label4, styles.labelTypo]}>Rp 200.000.000</Text>
             </View>
@@ -62,11 +62,6 @@ export default function CardRowSalesRev() {
                 <Text style={[styles.label3, styles.labelTypo]}>December</Text>
                 <Text style={[styles.label4, styles.labelTypo]}>Rp 200.000.000</Text>
             </View>
-            <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
-            <View style={styles.labelTotal}>
-                <Text style={styles.labelTotalText}>Total Revenue</Text>
-                <Text style={styles.labelContentTotalText}>Rp 1.200.000.000</Text>
-            </View> */}
         </>
     )
 }

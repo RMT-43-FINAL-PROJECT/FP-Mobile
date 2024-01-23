@@ -42,7 +42,7 @@ export default function MainBottomTab() {
                 }}
             />
             <Tab.Screen
-                name="UserProfile"
+                name="Settings"
                 component={Settings}
                 options={{
                     tabBarIcon: ({ color, size }) => (

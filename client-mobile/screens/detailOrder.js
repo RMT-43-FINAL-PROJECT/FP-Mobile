@@ -4,7 +4,7 @@ import CardDetailOrderBilled from "../components/CardDetailOrderBilled";
 import { formatDate } from "../helpers/formatter";
 
 export default function DetailOrder({ route }) {
-    const data = route.params
+    const { data } = route.params
     console.log(data, '<<<<');
     return (
         <View style={styles.outerContainer}>
@@ -15,7 +15,7 @@ export default function DetailOrder({ route }) {
                         <View style={styles.orderNumberParent}>
                             <Text style={[styles.orderNumber, styles.contentText]}>Order Number</Text>
                             <View style={styles.mainContentParent}>
-                                <Text style={styles.mainContentText}>{data.data._id.toUpperCase()}</Text>
+                                <Text style={styles.mainContentText}>{data._id.toUpperCase()}</Text>
                             </View>
                         </View>
                         <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
@@ -23,14 +23,14 @@ export default function DetailOrder({ route }) {
                             <Text style={[styles.orderNumber, styles.contentText]}>Store Name</Text>
                             <View style={styles.mainContentParent}>
                                 <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/location.png')} />
-                                <Text style={[styles.tokoPakBudi, styles.mainContentText]}>{data.data.store.name}</Text>
+                                <Text style={[styles.tokoPakBudi, styles.mainContentText]}>{data.store.name}</Text>
                             </View>
                         </View>
                         <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
                         <View style={styles.parentSpaceBlock}>
                             <Text style={[styles.orderNumber, styles.contentText]}>Created Order</Text>
                             <View style={styles.mainContentParent}>
-                                <Text style={styles.mainContentText}>{formatDate(data.data.createdAt)}</Text>
+                                <Text style={styles.mainContentText}>{formatDate(data.createdAt)}</Text>
                             </View>
                         </View>
                         <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
@@ -39,9 +39,9 @@ export default function DetailOrder({ route }) {
                             <View style={styles.mainContentParent}>
                                 <Text style={[
                                     styles.completedText, styles.textTypo,
-                                    data.data.status === 'pending' && styles.pendingStatus, styles.textTypo
+                                    data.status === 'pending' && styles.pendingStatus, styles.textTypo
                                 ]}>
-                                    {data.data.status}
+                                    {data.status}
                                 </Text>
                             </View>
                         </View>
@@ -50,13 +50,13 @@ export default function DetailOrder({ route }) {
                 <View style={styles.labelParent}>
 
                     <Text style={styles.label}>Products</Text>
-                    {data.data.productOrder.map((product) => (
+                    {data.productOrder.map((product) => (
                         <CardDetailOrderProducts key={product.productId} product={product} />
                     ))}
                 </View>
                 <View style={styles.labelParent}>
-                    <Text style={styles.label}>Detailed Billed</Text>
-                    <CardDetailOrderBilled billed={data.data} />
+                    <Text style={styles.label}>Summary Billed</Text>
+                    <CardDetailOrderBilled billed={data} />
                 </View>
             </ScrollView>
         </View>

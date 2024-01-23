@@ -1,30 +1,110 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import CardRowSalesRev from "../components/CardRowSalesRev";
+import { useEffect, useState } from "react";
+import { getValueFor } from "../helpers/secureStore";
+import { formatPriceToIDR } from "../helpers/formatter";
 
 export default function MonthlySales() {
+    const [dataRevenue, setDataRevenue] = useState('')
+
+    const fetchDataSalesRevenue = async () => {
+        try {
+            const token = await getValueFor('access_token')
+            if (token) {
+                const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/orders/monthly/user`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if (response.ok) {
+                    const result = await response.json();
+                    setDataRevenue(result)
+                } else {
+                    console.error('Request failed with status:', response.status);
+                }
+            } else {
+                console.error('Request failed with status:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+    useEffect(() => {
+        fetchDataSalesRevenue()
+
+    }, [])
     return (
         <View style={styles.outerContainer}>
             <ScrollView style={styles.componentParent}>
                 <View style={styles.labelParent}>
-                    <Text style={styles.label}>Year 2023</Text>
+                    <Text style={styles.label}>Year {Object.keys(dataRevenue)}</Text>
                     <View style={styles.frameParent}>
                         <View style={styles.labelFlexBox2}>
                             <Text style={[styles.label1, styles.labelFlexBox1]}>Months</Text>
                             <Text style={[styles.label2, styles.labelFlexBox]}>Generated Revenue</Text>
                         </View>
                         <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
-                        <CardRowSalesRev />
+                        <View style={[styles.labelContainer, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>January</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][1].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelContainer, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>February</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][2].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelContainer, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>March</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][3].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelContainer, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>April</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][4].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelContainer, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>May</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][5].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelParent4, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>June</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][6].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelParent4, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>July</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][7].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelParent4, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>August</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][8].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelParent4, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>September</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][9].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelParent4, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>October</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][10].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelParent4, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>November</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][11].totalConfirmedValue)}</Text>
+                        </View>
+                        <Image style={styles.separatorsIconLayout} resizeMode="cover" source={require('../assets/icons/separators.png')} />
+                        <View style={[styles.labelParent4, styles.labelFlexBox2]}>
+                            <Text style={[styles.label3, styles.labelTypo]}>December</Text>
+                            <Text style={[styles.label4, styles.labelTypo]}>{formatPriceToIDR(dataRevenue[2024][12].totalConfirmedValue)}</Text>
+                        </View>
+                        {/* <CardRowSalesRev /> */}
                         <View style={styles.labelTotal}>
                             <Text style={styles.labelTotalText}>Total Revenue</Text>
                             <Text style={styles.labelContentTotalText}>Rp 1.200.000.000</Text>
@@ -85,6 +165,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 8,
         backgroundColor: "#1B5FE3",
         alignItems: "center",
+        marginTop: 10
     },
     labelTotalText: {
         width: 100,

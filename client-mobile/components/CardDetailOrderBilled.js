@@ -7,7 +7,7 @@ export default function CardDetailOrderBilled({ billed }) {
         <View style={[styles.frameParent, styles.frameParentFlexBox]}>
             <View style={[styles.labelParent, styles.labelLayout]}>
                 <Text style={[styles.label, styles.labelTypo]}>Total</Text>
-                <Text style={styles.label1}>{formatPriceToIDR(billed.totalBill)}</Text>
+                <Text style={styles.label1}>{formatPriceToIDR(billed.totalBill + billed.discountValue)}</Text>
             </View>
             <View style={[styles.labelGroup, styles.labelLayout]}>
                 <Text style={[styles.label, styles.labelTypo]}>Discount</Text>
