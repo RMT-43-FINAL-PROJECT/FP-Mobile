@@ -9,22 +9,22 @@ export default function CardHomeScheduleVisit({ data }) {
             <View style={styles.contentContainer}>
                 <TouchableOpacity style={styles.rectangleParent} onPress={() => navigation.navigate('DetailVisit', { data: data })}>
                     <Image style={styles.imageStore} source={{
-                        uri: data.storeInformations.photo,
+                        uri: data?.storeInformations?.photo,
                     }} />
                     <View style={styles.mainContentContainer}>
-                        <Text style={styles.mainContentTitle}>{data.storeInformations.name}</Text>
+                        <Text style={styles.mainContentTitle}>{data?.storeInformations?.name}</Text>
                         <View style={styles.subContentContainer}>
                             <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/date.png')} />
-                            <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToDateString(data.time)}</Text>
+                            <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToDateString(data?.time)}</Text>
                         </View>
                         <View style={styles.subContentContainer}>
                             <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/time.png')} />
 
-                            <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToTimeString(data.time)}</Text>
+                            <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToTimeString(data?.time)}</Text>
                         </View>
                         <View style={styles.subContentContainer}>
                             <Text style={[data.isCompleted ? styles.completedColor : styles.pending, styles.contentRight]}>
-                                {data.isCompleted ? 'Completed' : 'Pending'}
+                                {data?.isCompleted ? 'Completed' : 'Pending'}
                             </Text>
                         </View>
                     </View>

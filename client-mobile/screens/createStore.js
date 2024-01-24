@@ -6,10 +6,10 @@ import * as Location from 'expo-location';
 import { getValueFor } from "../helpers/secureStore";
 
 export default function CreateStore({ navigation }) {
-    const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
-    const [ownerName, setOwnerName] = useState("");
-    const [mobilePhone, setMobilePhone] = useState("");
+    const [name, setName] = useState("Toko Terbaru");
+    const [address, setAddress] = useState("Jl. baru no 3");
+    const [ownerName, setOwnerName] = useState("Pak Baru Bikin");
+    const [mobilePhone, setMobilePhone] = useState("0855666698");
     const [longitude, setLongitude] = useState("");
     const [latitude, setLatitude] = useState("");
     const [image, setImage] = useState(null);

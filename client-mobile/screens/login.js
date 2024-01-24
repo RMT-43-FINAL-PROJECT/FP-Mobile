@@ -7,8 +7,8 @@ import { save } from "../helpers/secureStore";
 export default function Login({ navigation }) {
     const authContext = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("Messi@mail.com")
+    const [password, setPassword] = useState("12345")
 
     const handleSubmitLogin = async () => {
         try {
