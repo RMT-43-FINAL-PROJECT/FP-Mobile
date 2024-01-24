@@ -43,8 +43,8 @@ export default function OrderList() {
         dataOrderList();
     };
 
-    const filteredData = data.filter((item) =>
-        item.store.name.toLowerCase().includes(searchText.toLowerCase())
+    const filteredData = data?.filter((item) =>
+        item?.store?.name.toLowerCase().includes(searchText.toLowerCase())
     );
     return (
         <View style={styles.outerContainer}>

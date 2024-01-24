@@ -15,6 +15,8 @@ import CreateStore from '../screens/createStore';
 import { AuthContext } from '../context/AuthContext';
 import { getValueFor } from '../helpers/secureStore';
 import UpdateProfile from '../screens/updateProfile';
+import SummaryOrder from '../screens/summaryOrder';
+import CreateOrder from '../screens/createOrder';
 
 const Stack = createNativeStackNavigator()
 
@@ -105,6 +107,20 @@ const mainNavigation = () => {
               component={UpdateProfile}
               options={{
                 headerTitle: 'Update Profile'
+              }}
+            />
+            <Stack.Screen
+              name="SummaryOrder"
+              component={SummaryOrder}
+              options={{
+                headerTitle: 'Summary Order'
+              }}
+            />
+            <Stack.Screen
+              name="CreateOrder"
+              component={CreateOrder}
+              options={{
+                headerTitle: 'Create Order'
               }}
             />
           </> : <>

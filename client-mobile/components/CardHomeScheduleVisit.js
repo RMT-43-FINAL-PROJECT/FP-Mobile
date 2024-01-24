@@ -14,15 +14,15 @@ export default function CardHomeScheduleVisit({ data }) {
                     <View style={styles.mainContentContainer}>
                         <Text style={styles.mainContentTitle}>{data.storeInformations.name}</Text>
                         <View style={styles.subContentContainer}>
-                            <Text style={styles.content}>Date</Text>
+                            <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/date.png')} />
                             <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToDateString(data.time)}</Text>
                         </View>
                         <View style={styles.subContentContainer}>
-                            <Text style={styles.content}>Time</Text>
+                            <Image style={styles.iconLayout} contentMode="cover" source={require('../assets/icons/time.png')} />
+
                             <Text style={[styles.contentRightColor, styles.contentRight]}>{formatTimestampToTimeString(data.time)}</Text>
                         </View>
                         <View style={styles.subContentContainer}>
-                            <Text style={styles.content}>Status</Text>
                             <Text style={[data.isCompleted ? styles.completedColor : styles.pending, styles.contentRight]}>
                                 {data.isCompleted ? 'Completed' : 'Pending'}
                             </Text>
@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
         width: 72,
         height: 72
     },
+    iconLayout: {
+        height: 14,
+        width: 14,
+        overflow: "hidden"
+    },
     mainContentContainer: {
         justifyContent: "center",
         marginLeft: 10
@@ -71,6 +76,7 @@ const styles = StyleSheet.create({
     },
     subContentContainer: {
         marginTop: 5,
+        marginBottom: 2,
         flexDirection: "row"
     },
     content: {
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
         color: "black",
     },
     contentRightColor: {
-        color: "#1b5fe3"
+        color: "#6c6c6c"
     },
 
     completedColor: {

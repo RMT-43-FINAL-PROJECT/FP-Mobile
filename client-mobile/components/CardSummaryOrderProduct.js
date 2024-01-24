@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { formatPriceToIDR } from "../helpers/formatter";
 
-export default function CardDetailOrderProducts({ product }) {
-    console.log(product);
+export default function CardSummaryOrderProduct({ order }) {
+    console.log(order);
     return (
         <View style={styles.frameParent}>
             <View style={styles.labelGroup}>
@@ -11,20 +11,12 @@ export default function CardDetailOrderProducts({ product }) {
             </View>
             <View style={styles.frameContainer}>
                 <View style={styles.labelGroup}>
-                    <Text style={[styles.label3, styles.labelClr]}>{product.name}</Text>
-                    <Text style={[styles.label4, styles.labelClr]}>{product.qtySold} pcs</Text>
+                    <Text style={[styles.label3, styles.labelClr]}>{order.productName}</Text>
+                    <Text style={[styles.label4, styles.labelClr]}>{order.qtySold}</Text>
                 </View>
                 <View style={styles.labelWrapper}>
-                    <Text style={[styles.label5, styles.labelClr]}>{product.qtySold} x {formatPriceToIDR(product.finalPrice)}</Text>
+                    <Text style={[styles.label5, styles.labelClr]}>{formatPriceToIDR(order.price)}</Text>
                 </View>
-            </View>
-            <Image style={[styles.separatorsIcon, styles.separatorsIconSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
-            <View style={[styles.instanceParent, styles.separatorsIconSpaceBlock]}>
-                <View style={styles.totalPriceParent}>
-                    <Text style={[styles.totalPrice, styles.label1]}>Total Price</Text>
-                    <Text style={[styles.text, styles.labelClr]}>{formatPriceToIDR(product.billPerItem)}</Text>
-                </View>
-                <View style={styles.frameChild} />
             </View>
         </View>
     )
@@ -152,7 +144,7 @@ const styles = StyleSheet.create({
         padding: 16,
         marginTop: 5,
         borderRadius: 8,
-        marginBottom: 3
+        marginBottom: 10
     },
 
 });

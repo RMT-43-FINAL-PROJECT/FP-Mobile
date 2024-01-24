@@ -6,6 +6,7 @@ import * as Font from 'expo-font';
 import { useEffect, useState } from "react";
 import AuthProvider from "./context/AuthContext";
 import UserProvider from "./context/UserContext";
+import OrderProvider from "./context/OrderContext";
 
 
 
@@ -28,22 +29,26 @@ export default function App() {
   if (!fontLoaded) {
     return (
       <AuthProvider>
-        <UserProvider>
-          <SafeAreaProvider>
-            <MainNavigation />
-          </SafeAreaProvider>
-        </UserProvider>
+        <OrderProvider>
+          <UserProvider>
+            <SafeAreaProvider>
+              <MainNavigation />
+            </SafeAreaProvider>
+          </UserProvider>
+        </OrderProvider>
       </AuthProvider>
 
     );
   }
   return (
     <AuthProvider>
-      <UserProvider>
-        <SafeAreaProvider>
-          <MainNavigation />
-        </SafeAreaProvider>
-      </UserProvider>
+      <OrderProvider>
+        <UserProvider>
+          <SafeAreaProvider>
+            <MainNavigation />
+          </SafeAreaProvider>
+        </UserProvider>
+      </OrderProvider>
     </AuthProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { Alert, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { formatTimestampToDateString, formatTimestampToTimeString } from "../helpers/formatter";
 import * as Location from 'expo-location';
 import { useEffect, useState } from "react";
@@ -72,7 +72,6 @@ export default function DetailVisit({ route }) {
             })
             if (!response.ok) {
                 const data = await response.json();
-                console.log(data, '<<<<<');
                 Alert.alert("Failed to checked in", data.message);
             }
             if (response.ok) {
@@ -82,6 +81,8 @@ export default function DetailVisit({ route }) {
         } catch (error) {
             console.error("Error during checked in:", error);
             Alert.alert("Failed to checked in", "An error occurred while attempting to checked in.");
+        } finally {
+            setIsLoading(false);
         }
     }
     return (
@@ -140,8 +141,14 @@ export default function DetailVisit({ route }) {
                 </View>
                 <TouchableOpacity onPress={updateLocation}>
                     <View style={styles.buttonParent}>
-                        <View style={styles.textParent} />
-                        <Text style={styles.buttonText}>Im on location</Text>
+                        {isLoading ? (
+                            <ActivityIndicator size="small" color="#fff" /> // Display activity indicator while loading
+                        ) : (
+                            <>
+                                <View style={styles.textParent} />
+                                <Text style={styles.buttonText}>Im on location</Text>
+                            </>
+                        )}
                     </View>
                 </TouchableOpacity>
 

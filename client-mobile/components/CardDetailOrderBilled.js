@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { formatPriceToIDR } from "../helpers/formatter";
 
 export default function CardDetailOrderBilled({ billed }) {
-    console.log(billed, '<<<< ini billed');
+    console.log(billed);
     return (
         <View style={[styles.frameParent, styles.frameParentFlexBox]}>
             <View style={[styles.labelParent, styles.labelLayout]}>

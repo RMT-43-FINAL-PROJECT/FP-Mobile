@@ -7,8 +7,8 @@ import { save } from "../helpers/secureStore";
 export default function Login({ navigation }) {
     const authContext = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState("Salah@mail.com")
-    const [password, setPassword] = useState("12345")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const handleSubmitLogin = async () => {
         try {
@@ -17,7 +17,6 @@ export default function Login({ navigation }) {
                 email,
                 password
             }
-            console.log(input, '<<<<');
             const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/login`, {
                 headers: {
                     'Content-Type': "application/json"
@@ -27,7 +26,6 @@ export default function Login({ navigation }) {
             })
             if (!response.ok) {
                 const data = await response.json();
-                console.log(data, '<<<<<');
                 Alert.alert("Failed to login", data.message);
             }
             const data = await response.json();

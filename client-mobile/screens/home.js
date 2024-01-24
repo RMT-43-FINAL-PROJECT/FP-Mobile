@@ -7,8 +7,9 @@ import { UserContext } from "../context/UserContext";
 
 
 export default function Home({ navigation }) {
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
     const userContext = useContext(UserContext)
+    const data = userContext.userData
 
     const dataUser = async () => {
         try {
@@ -22,7 +23,7 @@ export default function Home({ navigation }) {
                 })
                 if (response.ok) {
                     const data = await response.json();
-                    setData(data)
+                    // setData(data)
                     userContext.setUserData(data)
 
                 } else {
@@ -31,7 +32,7 @@ export default function Home({ navigation }) {
 
 
             } else {
-                console.error('Access tokenr not found.');
+                console.error('Access token not found.');
             }
         } catch (error) {
             console.error('Error fetching data:', error);
