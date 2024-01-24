@@ -1,47 +1,58 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import CardDetailOrderProducts from "../components/CardDetailOrderProducts";
-import CardDetailOrderBilled from "../components/CardDetailOrderBilled";
-import { formatDate } from "../helpers/formatter";
+import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import CardSummaryOrderProduct from '../components/CardSummaryOrderProduct';
+import { useContext, useState } from 'react';
+import { OrderContext } from '../context/OrderContext';
+import { useNavigation } from '@react-navigation/native';
+import { getValueFor } from '../helpers/secureStore';
 
-export default function DetailOrder({ route }) {
-    const { data } = route.params
+export default function SummaryOrder() {
+    const orderContext = useContext(OrderContext)
+    const orderData = orderContext.orderData
+    const [loading, setLoading] = useState(false);
+    const navigation = useNavigation()
+
+    async function submitHandle() {
+        try {
+            setLoading(true);
+            const token = await getValueFor('access_token')
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/orders`, {
+                headers: {
+                    'Content-Type': "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                method: 'POST',
+                body: JSON.stringify(orderData)
+            })
+            if (!response.ok) {
+                const data = await response.json();
+                console.log(data);
+                Alert.alert("Failed to create order", data.message);
+            }
+            const data = await response.json();
+            console.log(data);
+
+
+            Alert.alert("Successfully created order!");
+            navigation.navigate('Overview')
+        } catch (error) {
+            console.error("Error:", error);
+            Alert.alert("Error", "Failed to create order");
+        } finally {
+            setLoading(false);
+        }
+
+    }
     return (
         <View style={styles.outerContainer}>
             <ScrollView style={styles.componentParent}>
                 <View style={styles.labelParent}>
                     <Text style={styles.label}>Orders</Text>
                     <View style={styles.frameParent}>
-                        <View style={styles.orderNumberParent}>
-                            <Text style={[styles.orderNumber, styles.contentText]}>Order Number</Text>
-                            <View style={styles.mainContentParent}>
-                                <Text style={styles.mainContentText}>{data._id.toUpperCase()}</Text>
-                            </View>
-                        </View>
-                        <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
                         <View style={styles.parentSpaceBlock}>
                             <Text style={[styles.orderNumber, styles.contentText]}>Store Name</Text>
                             <View style={styles.mainContentParent}>
                                 <Image style={styles.iconLayout} resizeMode="cover" source={require('../assets/icons/location.png')} />
-                                <Text style={[styles.tokoPakBudi, styles.mainContentText]}>{data.store.name}</Text>
-                            </View>
-                        </View>
-                        <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
-                        <View style={styles.parentSpaceBlock}>
-                            <Text style={[styles.orderNumber, styles.contentText]}>Created Order</Text>
-                            <View style={styles.mainContentParent}>
-                                <Text style={styles.mainContentText}>{formatDate(data.createdAt)}</Text>
-                            </View>
-                        </View>
-                        <Image style={[styles.separatorsIcon, styles.parentSpaceBlock]} resizeMode="cover" source={require('../assets/icons/separators.png')} />
-                        <View style={styles.parentSpaceBlock}>
-                            <Text style={[styles.orderNumber, styles.contentText]}>Status Order</Text>
-                            <View style={styles.mainContentParent}>
-                                <Text style={[
-                                    styles.completedText, styles.textTypo,
-                                    data.status === 'pending' && styles.pendingStatus, styles.textTypo
-                                ]}>
-                                    {data.status}
-                                </Text>
+                                <Text style={[styles.tokoPakBudi, styles.mainContentText]}>{orderData?.storeName}</Text>
                             </View>
                         </View>
                     </View>
@@ -49,19 +60,35 @@ export default function DetailOrder({ route }) {
                 <View style={styles.labelParent}>
 
                     <Text style={styles.label}>Products</Text>
-                    {data.productOrder.map((product) => (
-                        <CardDetailOrderProducts key={product.productId} product={product} />
+                    {orderData.productOrder.map((order, index) => (
+                        <CardSummaryOrderProduct key={index} order={order} />
                     ))}
                 </View>
-                <View style={styles.labelParent}>
-                    <Text style={styles.label}>Summary Billed</Text>
-                    <CardDetailOrderBilled billed={data} />
-                </View>
+                <TouchableOpacity onPress={submitHandle}>
+                    <View style={styles.buttonContainer}>
+                        {loading ? (
+                            <ActivityIndicator size="small" color="#fff" />
+                        ) : (
+                            <Text style={styles.buttonSubmitText}>Submit</Text>
+                        )}
+                    </View>
+                </TouchableOpacity>
             </ScrollView>
         </View>
     )
 }
 const styles = StyleSheet.create({
+    buttonContainer: {
+        backgroundColor: '#1b5fe3',
+        padding: 10,
+        borderRadius: 5,
+        marginVertical: 5
+    },
+    buttonSubmitText: {
+        color: '#fff',
+        fontFamily: 'Mulish-Bold',
+        textAlign: "center"
+    },
     outerContainer: {
         overflow: "hidden",
         flex: 1,
@@ -81,7 +108,6 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     parentSpaceBlock: {
-        marginTop: 10,
         alignSelf: "stretch"
     },
     mainContentText: {

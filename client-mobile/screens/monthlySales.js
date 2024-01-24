@@ -6,6 +6,7 @@ import { formatPriceToIDR } from "../helpers/formatter";
 
 export default function MonthlySales() {
     const [dataRevenue, setDataRevenue] = useState('')
+    const [total, setTotal] = useState('')
 
     const fetchDataSalesRevenue = async () => {
         try {
@@ -20,6 +21,7 @@ export default function MonthlySales() {
                 if (response.ok) {
                     const result = await response.json();
                     setDataRevenue(result)
+                    totalRevenue(result)
                 } else {
                     console.error('Request failed with status:', response.status);
                 }
@@ -30,6 +32,15 @@ export default function MonthlySales() {
             console.error('Error fetching data:', error);
         }
     }
+
+    function totalRevenue(result) {
+        let total = 0
+        for (const key in result[2024]) {
+            total += result[2024][key].totalConfirmedValue
+        }
+        setTotal(formatPriceToIDR(total))
+    }
+
     useEffect(() => {
         fetchDataSalesRevenue()
 
@@ -107,7 +118,7 @@ export default function MonthlySales() {
                         {/* <CardRowSalesRev /> */}
                         <View style={styles.labelTotal}>
                             <Text style={styles.labelTotalText}>Total Revenue</Text>
-                            <Text style={styles.labelContentTotalText}>Rp 1.200.000.000</Text>
+                            <Text style={styles.labelContentTotalText}>{total}</Text>
                         </View>
                     </View>
                 </View>

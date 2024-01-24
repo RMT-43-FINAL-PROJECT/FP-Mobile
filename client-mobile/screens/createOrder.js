@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
-import { Button, Dimensions, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { useContext, useEffect, useState } from "react";
+import { Alert, Button, Dimensions, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import { getValueFor } from "../helpers/secureStore"
 import axios from 'axios'
 import { formatPriceToIDR } from "../helpers/formatter";
-export default function CreateOrder() {
+import { OrderContext } from "../context/OrderContext";
+export default function CreateOrder({ navigation }) {
+    const orderContext = useContext(OrderContext)
     const [isProductNameVisible, setIsProductNameVisible] = useState(false);
     const [isPriceVisible, setIsPriceVisible] = useState(false);
     const [isStoreNameVisible, setIsStoreNameVisible] = useState(false);
+    const [isPickerEnabled, setIsPickerEnabled] = useState(true);
+
 
     let [selectedProductName, setSelectedProductName] = useState('Select Product')
     let [selectedStoreName, setSelectedStoreName] = useState('Select Store')
@@ -19,6 +23,7 @@ export default function CreateOrder() {
     let [price, setPrice] = useState(null);
     let [discQty, setDiscQty] = useState(null);
     let [finalPrice, setFinalPrice] = useState(null)
+    const [productOrder, setProductOrder] = useState([])
 
     async function getNameProduct() {
         const token = await getValueFor('access_token')
@@ -54,18 +59,52 @@ export default function CreateOrder() {
         }
     }
 
-    function submitHandle() {
-        let rawData = {
-            storeId: storeId,
-            productOrder: []
+    let rawData = {
+        storeId: storeId,
+        productOrder: productOrder,
+        storeName: selectedStoreName
+    }
+    let product = {
+        productId: productId,
+        qtySold: quantity,
+        price: finalPrice / quantity,
+        productName: selectedProductName
+    }
+    // rawData.productOrder.push(product)
+
+    async function submitHandle() {
+        if (productOrder.length === 0) {
+            navigation.navigate("CreateOrder")
+            Alert.alert('Error', 'Please add products')
+            return null
         }
-        let product = {
-            productId: productId,
-            qtySold: quantity,
-            price: finalPrice,
+        try {
+            orderContext.setOrderData(rawData)
+            navigation.navigate('SummaryOrder')
+
+        } catch (error) {
+            console.error("Error:", error);
+            Alert.alert("Error", "Failed to create order");
+        } finally {
+            setProductOrder([])
         }
-        rawData.productOrder.push(product)
-        console.log(rawData, '<<<<< UDAH SIAP POST. KALO MAU TAMBAH PRODUCT TINGGAL PUSH.... RENCANA : NAMBAH? PENCET -> KOSONGIN SEMUANYA KE SEMULA -> SUBMIT -> PUSH -> REPEAT')
+
+    }
+    function handleAddAnotherProduct() {
+        if (!selectedProductName || !quantity || !selectedStoreName) {
+            navigation.navigate("CreateOrder")
+            Alert.alert('Error', 'Field must be filled')
+            return null
+        }
+        setProductOrder([...productOrder, product])
+        clearForm()
+    }
+
+    function clearForm() {
+        setSelectedProductName('Select Product')
+        setQuantity(0)
+        setIsPickerEnabled(true);
+        setIsProductNameVisible(false);
     }
 
     function totalPrice() {
@@ -146,7 +185,7 @@ export default function CreateOrder() {
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
-                    <Modal visible={isStoreNameVisible} animationType="slide" transparent={true}>
+                    <Modal visible={isStoreNameVisible} animationType="slide" transparent={true} onRequestClose={() => clearForm()}>
                         <View style={styles.closeModalContainer}>
                             <TouchableOpacity onPress={() => setIsStoreNameVisible(false)} >
                                 <Image source={require('../assets/icons/closemodal.png')} style={styles.closeModalIcon} />
@@ -154,6 +193,7 @@ export default function CreateOrder() {
                         </View>
                         <View style={styles.modalContainer}>
                             <Picker
+                                enabled={isPickerEnabled}
                                 // selectedValue={price}
                                 onValueChange={(itemValue, index) => {
                                     setStoreId(itemValue);
@@ -214,6 +254,7 @@ export default function CreateOrder() {
                         <TextInput
                             style={styles.inputText}
                             placeholder="Ex: 1000 Karton"
+                            value={quantity}
                             keyboardType="numeric"
                             onChangeText={setQuantity}
                         />
@@ -253,6 +294,11 @@ export default function CreateOrder() {
                         }}>{formatPriceToIDR(finalPrice || 0)}</Text>
                     </View>
 
+                    <TouchableOpacity onPress={handleAddAnotherProduct}>
+                        <View style={styles.buttonContainer}>
+                            <Text style={styles.buttonSubmitText}>Add</Text>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={submitHandle}>
                         <View style={styles.buttonContainer}>
                             <Text style={styles.buttonSubmitText}>Submit</Text>
@@ -383,6 +429,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#1b5fe3',
         padding: 10,
         borderRadius: 5,
+        marginVertical: 8
     },
     buttonSubmitText: {
         color: '#fff',

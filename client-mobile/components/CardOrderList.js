@@ -13,7 +13,7 @@ export default function CardOrderList({ data }) {
                 <View style={styles.instanceWrapper}>
                     <View style={styles.orderNumberParent}>
                         <Text style={styles.orderNumberTitle}>Order Number</Text>
-                        <Text style={styles.orderNumberText}>{data._id.toUpperCase()}</Text>
+                        <Text style={styles.orderNumberText}>{data?._id.toUpperCase()}</Text>
                     </View>
                 </View>
                 <View style={styles.frameGroup}>
@@ -21,7 +21,7 @@ export default function CardOrderList({ data }) {
                         <Text style={styles.contentTitle}>Store Name</Text>
                         <View style={styles.parentMainContent}>
                             <Image style={styles.iconLayout} source={require('../assets/icons/location.png')} />
-                            <Text style={styles.mainContent}>{data.store.name}</Text>
+                            <Text style={styles.mainContent}>{data?.store?.name}</Text>
                         </View>
                     </View>
                     <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
@@ -29,7 +29,7 @@ export default function CardOrderList({ data }) {
                         <Text style={styles.contentTitle}>Total Billed</Text>
                         <View style={styles.parentMainContent}>
                             <Image style={styles.iconLayout} source={require('../assets/icons/price.png')} />
-                            <Text style={styles.mainContent}>{formatPriceToIDR(data.totalBill)}</Text>
+                            <Text style={styles.mainContent}>{formatPriceToIDR(data?.totalBill)}</Text>
                         </View>
                         <Image style={styles.separatorsIcon} source={require('../assets/icons/separators.png')} />
                     </View>
@@ -39,7 +39,7 @@ export default function CardOrderList({ data }) {
                             styles.confirmStatus,
                             data.status === 'pending' && styles.pendingStatus
                         ]}>
-                            {data.status}
+                            {data?.status}
                         </Text>
                     </View>
                 </View>

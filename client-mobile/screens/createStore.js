@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Image, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Button, Image, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { getValueFor } from "../helpers/secureStore";
 
 export default function CreateStore({ navigation }) {
-    const [name, setName] = useState("toko ani");
-    const [address, setAddress] = useState("jl abcd");
-    const [ownerName, setOwnerName] = useState("budi");
-    const [mobilePhone, setMobilePhone] = useState("0899998888");
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [ownerName, setOwnerName] = useState("");
+    const [mobilePhone, setMobilePhone] = useState("");
     const [longitude, setLongitude] = useState("");
     const [latitude, setLatitude] = useState("");
     const [image, setImage] = useState(null);
     const [markerCoordinate, setMarkerCoordinate] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
     useEffect(() => {
         (async () => {
@@ -45,6 +47,7 @@ export default function CreateStore({ navigation }) {
 
     const handleFormSubmit = async () => {
         try {
+            setLoading(true);
             const token = await getValueFor('access_token')
             let localUri = image;
             let filename = localUri.split("/").pop();
@@ -79,10 +82,13 @@ export default function CreateStore({ navigation }) {
             const data = await response.json();
             console.log(data);
             Alert.alert("Success!", "Created store");
+            clearForm()
             navigation.navigate('StoreList')
         } catch (error) {
             console.error("Error:", error);
             Alert.alert("Error", "Failed to create store");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -133,6 +139,15 @@ export default function CreateStore({ navigation }) {
     const closeModal = () => {
         setModalVisible(false);
     };
+
+    function clearForm() {
+        setName('')
+        setAddress('')
+        setMobilePhone('');
+        setLongitude('');
+        setLatitude('');
+        setImage(null);
+    }
     return (
         <View style={styles.outerContainer}>
             <ScrollView style={styles.componentParent}>
@@ -216,7 +231,11 @@ export default function CreateStore({ navigation }) {
                     {image && <Image source={{ uri: image }} style={styles.image} />}
                     <TouchableOpacity onPress={handleFormSubmit}>
                         <View style={styles.buttonContainerUpload}>
-                            <Text style={styles.buttonSubmitText}>Submit</Text>
+                            {loading ? (
+                                <ActivityIndicator size="small" color="#fff" />
+                            ) : (
+                                <Text style={styles.buttonSubmitText}>Submit</Text>
+                            )}
                         </View>
                     </TouchableOpacity>
                 </View>

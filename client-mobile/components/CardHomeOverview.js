@@ -87,7 +87,6 @@ export default function CardHomeOverview() {
                 })
                 if (response.ok) {
                     const result = await response.json();
-                    console.log(result, "<<<<");
                     setDataRevenue(result)
                 } else {
                     console.error('Request failed with status:', response.status);

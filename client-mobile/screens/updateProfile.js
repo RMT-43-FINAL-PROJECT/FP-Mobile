@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import * as ImagePicker from 'expo-image-picker';
 import { getValueFor } from "../helpers/secureStore";
 import { UserContext } from "../context/UserContext";
@@ -15,6 +15,7 @@ export default function UpdateProfile({ route }) {
     const [mobilePhone, setMobilePhone] = useState('')
     const [address, setAddress] = useState('')
     const [photo, setPhoto] = useState('')
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -46,6 +47,7 @@ export default function UpdateProfile({ route }) {
 
     const handleFormSubmit = async () => {
         try {
+            setLoading(true);
             const token = await getValueFor('access_token')
             let localUri = photo;
             let filename = localUri.split("/").pop();
@@ -71,18 +73,21 @@ export default function UpdateProfile({ route }) {
 
             if (!response.ok) {
                 const result = await response.json();
-                console.log(result, '<<<<<');
+                console.log(result);
                 Alert.alert("Failed to update profile", result.message);
             }
 
             const result = await response.json();
             console.log(result);
             Alert.alert("Success!", "Updated your profile");
+            userContext.setUserData(result)
 
             navigation.navigate('Settings')
         } catch (error) {
             console.error("Error:", error);
             Alert.alert("Error", "Failed to update your profile");
+        } finally {
+            setLoading(false);
         }
     };
     return (
@@ -151,7 +156,11 @@ export default function UpdateProfile({ route }) {
                     {photo && <Image source={{ uri: photo }} style={styles.image} />}
                     <TouchableOpacity onPress={handleFormSubmit}>
                         <View style={styles.buttonContainerUpload}>
-                            <Text style={styles.buttonSubmitText}>Submit</Text>
+                            {loading ? (
+                                <ActivityIndicator size="small" color="#fff" />
+                            ) : (
+                                <Text style={styles.buttonSubmitText}>Submit</Text>
+                            )}
                         </View>
                     </TouchableOpacity>
                 </View>
